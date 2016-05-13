@@ -1,0 +1,66 @@
+﻿@model EF.Core.Data.Transactions
+
+@{
+    ViewBag.Title = "Create/Edit Transaction";
+}
+
+<h2>CreateEditTransaction</h2>
+
+<div class="book-example panel panel-primary">
+    <div class="panel-heading panel-head">Add / Edit Transaction</div>
+    <div class="panel-body">
+        @using (Html.BeginForm())
+        {
+            <div class="form-horizontal">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Description,
+                    new { @class = "col-lg-2 control-label" })
+                    <div class="col-lg-9">
+                        @Html.TextBoxFor(model => model.Description,
+                        new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.UsersId,
+                    new { @class = "col-lg-2 control-label" })
+                    <div class="col-lg-9">
+                        @Html.TextBoxFor(model => model.UsersId,
+                        new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.TranactionTypeId,
+                    new { @class = "col-lg-2 control-label" })
+                    <div class="col-lg-9">
+                        @Html.TextBoxFor(model => model.TranactionTypeId,
+                        new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Date,
+                    new { @class = "col-lg-2 control-label" })
+                    <div class="col-lg-9">
+                        @Html.TextBoxFor(model => model.Date,
+                        new { @class = "form-control datepicker" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-lg-8"></div>
+                    <div class="col-lg-3">
+                        @Html.ActionLink("Back to List", "Index",
+                        null, new { @class = "btn btn-default" })
+                        <button class="btn btn-success"
+                                id="btnSubmit" type="submit">
+                            Submit
+                        </button>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+@section scripts
+{
+    <script src="~/Scripts/bootstrap-datepicker.js"></script>
+    <script src="~/Scripts/transaction-create-edit.js"></script>
+}
