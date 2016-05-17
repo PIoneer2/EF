@@ -82,10 +82,17 @@ namespace EF.Web.Controllers
         }
 
         // GET: Transactions/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult Delete(int? id)
         {
-            Transactions model = transactionsRepository.GetById(id);
-            return View(model);
+            if (id.HasValue)
+            {
+                Transactions model = transactionsRepository.GetById(id);
+                return View(model);
+            }
+            else
+            {
+                return RedirectToAction("Index");
+            }
         }
 
         // POST: Transactions/Delete/5

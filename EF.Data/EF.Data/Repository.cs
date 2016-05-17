@@ -9,7 +9,10 @@ namespace EF.Data
 {
     public class Repository<T> where T : BaseEntity
     {
-        private readonly EFDbContext context;
+        //decapsulated with Castle.Windsor
+        //private readonly EFDbContext context;
+        public EFDbContext context;
+
         private IDbSet<T> entities;
         string errorMessage = string.Empty;
 

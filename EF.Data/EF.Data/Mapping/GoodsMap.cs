@@ -10,9 +10,9 @@ namespace EF.Data.Mapping
         {
             HasKey(t => t.ID);
             Property(t => t.ID).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
-            Property(t => t.Name).IsRequired();
+            Property(t => t.Name).IsRequired().IsUnicode().IsVariableLength().HasMaxLength(50);
             Property(t => t.Quantity).IsRequired();
-            Property(t => t.Info).IsRequired();
+            Property(t => t.Info).IsOptional().IsUnicode().IsVariableLength().HasMaxLength(50);
             ToTable("Goods");
         }
     }

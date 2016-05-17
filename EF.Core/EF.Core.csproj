@@ -52,12 +52,18 @@
     <Compile Include="BaseEntity.cs" />
     <Compile Include="Data\Goods.cs" />
     <Compile Include="Data\GoodsInTransaction.cs" />
+    <Compile Include="Data\GoodsInWarehauses.cs" />
     <Compile Include="Data\Permissions.cs" />
     <Compile Include="Data\PermissionSet.cs" />
+    <Compile Include="Data\Restrictions.cs" />
+    <Compile Include="Data\RestrictionsSet.cs" />
     <Compile Include="Data\Roles.cs" />
+    <Compile Include="Data\Sizes.cs" />
     <Compile Include="Data\TranactionType.cs" />
     <Compile Include="Data\Transactions.cs" />
+    <Compile Include="Data\TypeOfStorage.cs" />
     <Compile Include="Data\Users.cs" />
+    <Compile Include="Data\WarehousesPlaces.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
