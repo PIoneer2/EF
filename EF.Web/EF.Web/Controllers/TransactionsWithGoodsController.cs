@@ -9,26 +9,27 @@ using EF.Core;
 
 namespace EF.Web.Controllers
 {
-    public class TransactionsController : Controller
+    public class TransactionsWithGoodsController : Controller
     {
 
         private UnitOfWork unitOfWork = new UnitOfWork();
         private Repository<Transactions> transactionsRepository;
+        private Repository<GoodsInTransaction> goodsInTransactionsRepository;
 
-        public TransactionsController ()
-            {
+        public TransactionsWithGoodsController()
+        {
             transactionsRepository = unitOfWork.Repository<Transactions>();
-            }
+            goodsInTransactionsRepository = unitOfWork.Repository<GoodsInTransaction>();
+        }
 
-    // GET: Transactions
-    public ActionResult Index()
+        // GET: Transactions
+        public ActionResult Index()
         {
             IEnumerable<Transactions> transactions = transactionsRepository.Table.ToList();
             return View(transactions);
         }
 
         // GET: Transactions/Details/5
-
         public ActionResult Details(int? id)
         {
             if (id.HasValue)
@@ -36,8 +37,7 @@ namespace EF.Web.Controllers
                 Transactions model = transactionsRepository.GetById(id);
                 return View(model);
             }
-            else
-            {
+            else {
                 return RedirectToAction("Index");
             }
         }

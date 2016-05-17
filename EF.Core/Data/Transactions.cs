@@ -8,15 +8,11 @@ namespace EF.Core.Data
 {
     public class Transactions : BaseEntity
     {
-        //
-        //Закомментировано для обрезки стартовой базы
-        //
-        //public Transactions()
-        //{
-        //    this.GoodsInTransaction = new HashSet<GoodsInTransaction>();
-        //}
-        //public virtual ICollection<GoodsInTransaction> GoodsInTransaction { get; set; }
-
+        public Transactions()
+        {
+            this.GoodsInTransaction = new HashSet<GoodsInTransaction>();
+        }
+        
         public string Description { get; set; }
         public Int64 TranactionTypeId { get; set; }
         public Int64 UsersId { get; set; }
@@ -24,6 +20,6 @@ namespace EF.Core.Data
 
         public virtual TranactionType TranactionType { get; set; }
         public virtual Users Users { get; set; }
-        
+        public virtual ICollection<GoodsInTransaction> GoodsInTransaction { get; set; }
     }
 }

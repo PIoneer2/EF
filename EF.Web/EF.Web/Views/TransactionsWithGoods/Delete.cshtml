@@ -1,0 +1,64 @@
+﻿@model EF.Core.Data.Transactions
+@{
+    ViewBag.Title = "Transaction delete";
+}
+
+<h2>Delete</h2>
+
+<div class="book-example panel panel-primary">
+    <div class="panel-heading panel-head">Delete transaction</div>
+    <div class="panel-body">
+        <h3>Are you sure you want to delete this?</h3>
+        <h1>@ViewBag.ErrorMessage</h1>
+        <div class="form-horizontal">
+            <div class="form-group">
+                @Html.LabelFor(model => model.Description,
+                new { @class = "col-lg-1 control-label" })
+                <div class="col-lg-9">
+                    @Html.DisplayFor(model => model.Description,
+                    new { @class = "form-control" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.UsersId,
+                new { @class = "col-lg-1 control-label" })
+                <div class="col-lg-9">
+                    @Html.DisplayFor(model => model.UsersId,
+                    new { @class = "form-control" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.TranactionTypeId,
+                new { @class = "col-lg-1 control-label" })
+                <div class="col-lg-9">
+                    @Html.DisplayFor(model => model.TranactionTypeId,
+                    new { @class = "form-control" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Date,
+                new { @class = "col-lg-1 control-label" })
+                <div class="col-lg-9">
+                    @Html.DisplayFor(model => model.Date,
+                    new { @class = "form-control" })
+                </div>
+            </div>
+
+            @using (Html.BeginForm())
+            {
+                <div class="form-group">
+                    <div class="col-lg-1"></div>
+                    <div class="col-lg-9">
+                        <input type="submit" value="Delete"
+                               class="btn btn-danger" />
+                        @Html.ActionLink("Back to List", "Index",
+                        null, new { @class = "btn btn-success" })
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

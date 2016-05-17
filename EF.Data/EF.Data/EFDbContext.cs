@@ -14,12 +14,22 @@ namespace EF.Data
         public EFDbContext()
             : base("name=DefaultConnection")
         {
+            //allready don`t need - Migrations enabled
             //AppDomain.CurrentDomain.SetData("DataDirectory", System.IO.Directory.GetCurrentDirectory());
         }
 
         public new IDbSet<TEntity> Set<TEntity>() where TEntity : BaseEntity
         {
             return base.Set<TEntity>();
+        }
+
+        public class EFDbInitializer : System.Data.Entity.DropCreateDatabaseIfModelChanges<EFDbContext>
+        {
+            protected override void Seed(EFDbContext context)
+            {
+
+
+            }
         }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -35,5 +45,7 @@ namespace EF.Data
             }
             base.OnModelCreating(modelBuilder);
         }
+
+        public System.Data.Entity.DbSet<EF.Core.Data.Goods> Goods { get; set; }
     }
 }
