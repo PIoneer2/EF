@@ -6,17 +6,19 @@ using System.Web.Mvc;
 using EF.Core.Data;
 using EF.Data;
 using EF.Core;
+using System.Runtime.CompilerServices;
 
 namespace EF.Web.Controllers
 {
     public class TransactionsController : Controller
     {
 
-        private UnitOfWork unitOfWork = new UnitOfWork();
+        private UnitOfWork unitOfWork;
         private Repository<Transactions> transactionsRepository;
 
-        public TransactionsController ()
+        public TransactionsController (UnitOfWork tmpUnit)
             {
+            unitOfWork = tmpUnit;
             transactionsRepository = unitOfWork.Repository<Transactions>();
             }
 
@@ -29,65 +31,122 @@ namespace EF.Web.Controllers
 
         // GET: Transactions/Details/5
 
-        public ActionResult Details(int? id)
+        public ActionResult Details(object id)
         {
-            if (id.HasValue)
-            {
-                Transactions model = transactionsRepository.GetById(id);
-                return View(model);
+            if (id != null) {
+                
+                if (id is int)
+                {
+                    Transactions model = transactionsRepository.GetById(id);
+                    return View(model);
+                }
+
+                //if (id is ...)
+                //{
+                //    ...
+                //}
+
+                else
+                {
+                    return RedirectToAction("Index");
+                }
             }
-            else
-            {
+            else {
                 return RedirectToAction("Index");
             }
         }
 
         // GET: Transactions/CreateEditTransaction
-        public ActionResult CreateEditTransaction(int? id)
+        public ActionResult CreateEditTransaction(object id)
         {
-            Transactions model = new Transactions();
-            if (id.HasValue)
+            if (id != null)
             {
-                model = transactionsRepository.GetById(id.Value);
-            }
-            return View(model);
-        }
-
-        [HttpPost]
-        public ActionResult CreateEditTransaction(Transactions model)
-        {
-            if (model.ID == 0)
-            {
-                model.Date = System.DateTime.Now;
-                model.Description = "";
-                model.TranactionTypeId = 1;
-                model.UsersId = 1;
-                transactionsRepository.Insert(model);
+                if (id is int )
+                { 
+                Transactions model = new Transactions();
+                model = transactionsRepository.GetById(id);
+                return View(model);
+                }
+                else
+                {
+                    return RedirectToAction("Index");
+                }
             }
             else
             {
-                var editModel = transactionsRepository.GetById(model.ID);
-                editModel.Description = model.Description; ;
-                editModel.TranactionTypeId = model.TranactionTypeId;
-                editModel.UsersId = model.UsersId;
-                editModel.Date = model.Date;
-                transactionsRepository.Update(editModel);
-            }
-
-            if (model.ID > 0)
-            {
                 return RedirectToAction("Index");
             }
-            return View(model);
+        }
+
+        [HttpPost, ActionName("CreateEditTransaction")]
+        public ActionResult CreateEditTransactionInPost(object mdl) //Transactions model
+        {
+                if (mdl != null)
+                {
+                    if (mdl is Transactions)
+                    {
+                        Transactions model = (Transactions)mdl;
+
+                    if (0 == model.ID)
+                    {
+                        model.Date = System.DateTime.Now;
+                        model.Description = "";
+                        model.TranactionTypeId = 1;
+                        model.UsersId = 1;
+                        transactionsRepository.Insert(model);
+                    }
+                    else
+                    {
+                        var editModel = transactionsRepository.GetById(model.ID);
+                        editModel.Description = model.Description; ;
+                        editModel.TranactionTypeId = model.TranactionTypeId;
+                        editModel.UsersId = model.UsersId;
+                        editModel.Date = model.Date;
+                        transactionsRepository.Update(editModel);
+                    }
+
+                    if (model.ID > 0)
+                    {
+                        return RedirectToAction("Index");
+                    }
+                    return View(model);
+                }
+
+                //if (id is ...)
+                //{
+                //    ...
+                //}
+
+                else
+                {
+                    return RedirectToAction("Index");
+                }
+            }
+            else {
+                return RedirectToAction("Index");
+            }
         }
 
         // GET: Transactions/Delete/5
-        public ActionResult Delete(int? id)
+        public ActionResult Delete(object id)
         {
-            if (id.HasValue)
+            if (id != null)
             {
-                Transactions model = transactionsRepository.GetById(id);
-                return View(model);
+                if (id is int)
+                {
+                    Transactions model = transactionsRepository.GetById(id);
+                    return View(model);
+                }
+
+                //if (id is ...)
+                //{
+                //    ...
+                //}
+
+                else
+                {
+                    return RedirectToAction("Index");
+                }
             }
             else
             {
@@ -97,12 +156,33 @@ namespace EF.Web.Controllers
 
         // POST: Transactions/Delete/5
         [HttpPost, ActionName("Delete")]
-        public ActionResult ConfirmDelete(int id)
+        public ActionResult ConfirmDelete(object id)
         {
-            Transactions model = transactionsRepository.GetById(id);
-            transactionsRepository.Delete(model);
-            return RedirectToAction("Index");
+            if (id != null)
+            {
+                if (id is int)
+                {
+                    Transactions model = transactionsRepository.GetById(id);
+                    transactionsRepository.Delete(model);
+                    return RedirectToAction("Index");
+                }
+
+                //if (id is ...)
+                //{
+                //    ...
+                //}
+
+                else
+                {
+                    return RedirectToAction("Index");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Index");
+            }
         }
+
 
         protected override void Dispose(bool disposing)
         {

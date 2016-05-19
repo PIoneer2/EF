@@ -13,11 +13,12 @@ namespace EF.Web.Controllers
 {
     public class GoodsController : Controller
     {
-        private UnitOfWork unitOfWork = new UnitOfWork();
+        private UnitOfWork unitOfWork;
         private Repository<Goods> goodsRepository;
 
-        public GoodsController()
+        public GoodsController(UnitOfWork tmpUnit)
         {
+            unitOfWork = tmpUnit;
             goodsRepository = unitOfWork.Repository<Goods>();
         }
 
@@ -28,27 +29,65 @@ namespace EF.Web.Controllers
         }
 
         // GET: Goods/Details/5
-        public ActionResult Details(int id)
+        public ActionResult Details(object id)
         {
-            Goods model = goodsRepository.GetById(id);
-            return View(model);
+            if (id != null)
+            {
+
+                if (id is int)
+                {
+                    Goods model = goodsRepository.GetById(id);
+                    return View(model);
+                }
+
+                //if (id is ...)
+                //{
+                //    ...
+                //}
+
+                else
+                {
+                    return RedirectToAction("Index");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Index");
+            }
         }
 
         // GET: Goods/CreateEditGood
-        public ActionResult CreateEditGood(int? id)
+        public ActionResult CreateEditGood(object id)
         {
-            Goods model = new Goods();
-            if (id.HasValue)
+            if (id != null)
             {
-                model = goodsRepository.GetById(id.Value);
+                if (id is int)
+                {
+                    Goods model = new Goods();
+                    model = goodsRepository.GetById(id);
+                    return View(model);
+                }
+                else
+                {
+                    return RedirectToAction("Index");
+                }
             }
-            return View(model);
+            else
+            {
+                return RedirectToAction("Index");
+            }
         }
 
-        [HttpPost]
-        public ActionResult CreateEditGood(Goods model)
+        [HttpPost, ActionName("CreateEditGood")]
+        public ActionResult CreateEditGoodInPost(object mdl)//Goods
         {
-            if (model.ID == 0)
+            if (mdl != null)
+            {
+                if (mdl is Goods)
+                {
+                    Goods model = (Goods)mdl;
+
+                    if (model.ID == 0)
             {
                 model.Name = "";
                 model.Quantity = 1;
@@ -64,27 +103,83 @@ namespace EF.Web.Controllers
                 goodsRepository.Update(editModel);
             }
 
-            if (model.ID > 0)
+                    if (model.ID > 0)
+                    {
+                        return RedirectToAction("Index");
+                    }
+                    return View(model);
+                }
+
+                //if (id is ...)
+                //{
+                //    ...
+                //}
+
+                else
+                {
+                    return RedirectToAction("Index");
+                }
+            }
+            else
             {
                 return RedirectToAction("Index");
             }
-            return View(model);
         }
 
         // GET: Goods/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult Delete(object id)
         {
-            Goods model = goodsRepository.GetById(id);
-            return View(model);
+            if (id != null)
+            {
+                if (id is int)
+                {
+                    Goods model = goodsRepository.GetById(id);
+                    return View(model);
+                }
+
+                //if (id is ...)
+                //{
+                //    ...
+                //}
+
+                else
+                {
+                    return RedirectToAction("Index");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Index");
+            }
         }
 
         // POST: Goods/Delete/5
         [HttpPost, ActionName("Delete")]
-        public ActionResult ConfirmDelete(int id)
+        public ActionResult ConfirmDelete(object id)
         {
-            Goods model = goodsRepository.GetById(id);
-            goodsRepository.Delete(model);
-            return RedirectToAction("Index");
+            if (id != null)
+            {
+                if (id is int)
+                {
+                    Goods model = goodsRepository.GetById(id);
+                    goodsRepository.Delete(model);
+                    return RedirectToAction("Index");
+                }
+
+                //if (id is ...)
+                //{
+                //    ...
+                //}
+
+                else
+                {
+                    return RedirectToAction("Index");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Index");
+            }
         }
 
         protected override void Dispose(bool disposing)
@@ -92,116 +187,5 @@ namespace EF.Web.Controllers
             unitOfWork.Dispose();
             base.Dispose(disposing);
         }
-
-        /*
-        // GET: Goods
-        public ActionResult Index()
-        {
-            return View(db.Goods.ToList());
-        }
-
-        // GET: Goods/Details/5
-        public ActionResult Details(long? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Goods goods = db.Goods.Find(id);
-            if (goods == null)
-            {
-                return HttpNotFound();
-            }
-            return View(goods);
-        }
-
-        // GET: Goods/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: Goods/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Name,Quantity,Info")] Goods goods)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Goods.Add(goods);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-
-            return View(goods);
-        }
-
-        // GET: Goods/Edit/5
-        public ActionResult Edit(long? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Goods goods = db.Goods.Find(id);
-            if (goods == null)
-            {
-                return HttpNotFound();
-            }
-            return View(goods);
-        }
-
-        // POST: Goods/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,Name,Quantity,Info")] Goods goods)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(goods).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            return View(goods);
-        }
-
-        // GET: Goods/Delete/5
-        public ActionResult Delete(long? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Goods goods = db.Goods.Find(id);
-            if (goods == null)
-            {
-                return HttpNotFound();
-            }
-            return View(goods);
-        }
-
-        // POST: Goods/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(long id)
-        {
-            Goods goods = db.Goods.Find(id);
-            db.Goods.Remove(goods);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }*/
     }
 }

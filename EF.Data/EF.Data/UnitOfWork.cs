@@ -15,10 +15,12 @@ namespace EF.Data
             this.context = context;
         }
 
+        /* commented with entering Castle Windsor*/
         public UnitOfWork()
         {
-            context = new EFDbContext();
+            //context = new EFDbContext();
         }
+        
 
         public void Dispose()
         {

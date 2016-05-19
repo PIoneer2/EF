@@ -11,11 +11,12 @@ namespace EF.Web.Controllers
 {
     public class GoodsInTransactionController : Controller
     {
-        private UnitOfWork unitOfWork = new UnitOfWork();
+        private UnitOfWork unitOfWork;
         private Repository<GoodsInTransaction> goodsInTransactionsRepository;
 
-        public GoodsInTransactionController()
+        public GoodsInTransactionController(UnitOfWork tmpUnit)
         {
+            unitOfWork = tmpUnit;
             goodsInTransactionsRepository = unitOfWork.Repository<GoodsInTransaction>();
         }
 
@@ -27,27 +28,65 @@ namespace EF.Web.Controllers
         }
 
         // GET: GoodsInTransaction/Details/5
-        public ActionResult Details(int id)
+        public ActionResult Details(object id)
         {
-            GoodsInTransaction model = goodsInTransactionsRepository.GetById(id);
-            return View(model);
+            if (id != null)
+            {
+
+                if (id is int)
+                {
+                    GoodsInTransaction model = goodsInTransactionsRepository.GetById(id);
+                    return View(model);
+                }
+
+                //if (id is ...)
+                //{
+                //    ...
+                //}
+
+                else
+                {
+                    return RedirectToAction("Index");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Index");
+            }
         }
 
         // GET: GoodsInTransaction/CreateEditGoodsInTransaction
-        public ActionResult CreateEditGoodsInTransaction(int? id)
+        public ActionResult CreateEditGoodsInTransaction(object id)
         {
-            GoodsInTransaction model = new GoodsInTransaction();
-            if (id.HasValue)
+            if (id != null)
             {
-                model = goodsInTransactionsRepository.GetById(id.Value);
+                if (id is int)
+                {
+                GoodsInTransaction model = new GoodsInTransaction();
+                model = goodsInTransactionsRepository.GetById(id);
+                return View(model);
+                }
+                else
+                {
+                    return RedirectToAction("Index");
+                }
             }
-            return View(model);
+            else
+            {
+                return RedirectToAction("Index");
+            }
         }
 
-        [HttpPost]
-        public ActionResult CreateEditGoodsInTransaction(GoodsInTransaction model)
+        [HttpPost,ActionName("CreateEditGoodsInTransaction")]
+        public ActionResult CreateEditGoodsInTransactionInPost(object mdl)//GoodsInTransaction
         {
-            if (model.ID == 0)
+            if (mdl != null)
+            {
+                if (mdl is GoodsInTransaction)
+                {
+                    GoodsInTransaction model = (GoodsInTransaction)mdl;
+
+                    if (model.ID == 0)
             {
                 model.TransactionsId = 1;
                 model.GoodsId = 1;
@@ -63,27 +102,83 @@ namespace EF.Web.Controllers
                 goodsInTransactionsRepository.Update(editModel);
             }
 
-            if (model.ID > 0)
+                    if (model.ID > 0)
+                    {
+                        return RedirectToAction("Index");
+                    }
+                    return View(model);
+                }
+
+                //if (id is ...)
+                //{
+                //    ...
+                //}
+
+                else
+                {
+                    return RedirectToAction("Index");
+                }
+            }
+            else
             {
                 return RedirectToAction("Index");
             }
-            return View(model);
         }
 
         // GET: GoodsInTransaction/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult Delete(object id)
         {
-            GoodsInTransaction model = goodsInTransactionsRepository.GetById(id);
-            return View(model);
+            if (id != null)
+            {
+                if (id is int)
+                {
+                    GoodsInTransaction model = goodsInTransactionsRepository.GetById(id);
+                    return View(model);
+                }
+
+                //if (id is ...)
+                //{
+                //    ...
+                //}
+
+                else
+                {
+                    return RedirectToAction("Index");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Index");
+            }
         }
 
         // POST: GoodsInTransaction/Delete/5
         [HttpPost, ActionName("Delete")]
-        public ActionResult ConfirmDelete(int id)
+        public ActionResult ConfirmDelete(object id)
         {
-            GoodsInTransaction model = goodsInTransactionsRepository.GetById(id);
-            goodsInTransactionsRepository.Delete(model);
-            return RedirectToAction("Index");
+            if (id != null)
+            {
+                if (id is int)
+                {
+                    GoodsInTransaction model = goodsInTransactionsRepository.GetById(id);
+                    goodsInTransactionsRepository.Delete(model);
+                    return RedirectToAction("Index");
+                }
+
+                //if (id is ...)
+                //{
+                //    ...
+                //}
+
+                else
+                {
+                    return RedirectToAction("Index");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Index");
+            }
         }
 
         protected override void Dispose(bool disposing)
