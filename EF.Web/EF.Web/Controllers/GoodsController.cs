@@ -8,15 +8,16 @@ using System.Web;
 using System.Web.Mvc;
 using EF.Core.Data;
 using EF.Data;
+using EF.Web.Models;
 
 namespace EF.Web.Controllers
 {
     public class GoodsController : Controller
     {
-        private UnitOfWork unitOfWork;
-        private Repository<Goods> goodsRepository;
+        private EFUnitOfWork unitOfWork;
+        private EFRepository<Goods> goodsRepository;
 
-        public GoodsController(UnitOfWork tmpUnit)
+        public GoodsController(EFUnitOfWork tmpUnit)
         {
             unitOfWork = tmpUnit;
             goodsRepository = unitOfWork.Repository<Goods>();
@@ -24,8 +25,7 @@ namespace EF.Web.Controllers
 
         public ActionResult Index()
         {
-            IEnumerable<Goods> goods = goodsRepository.Table.ToList();
-            return View(goods);
+            return View(BL.Index<Goods>(this.goodsRepository));
         }
 
         // GET: Goods/Details/5
@@ -34,16 +34,10 @@ namespace EF.Web.Controllers
             if (id != null)
             {
 
-                if (id is int)
+                if (id is long)
                 {
-                    Goods model = goodsRepository.GetById(id);
-                    return View(model);
+                    return View(BL.Details<Goods>((long)id, this.goodsRepository));
                 }
-
-                //if (id is ...)
-                //{
-                //    ...
-                //}
 
                 else
                 {
@@ -61,11 +55,9 @@ namespace EF.Web.Controllers
         {
             if (id != null)
             {
-                if (id is int)
+                if (id is long)
                 {
-                    Goods model = new Goods();
-                    model = goodsRepository.GetById(id);
-                    return View(model);
+                    return View(BL.Details<Goods>((long)id, this.goodsRepository));
                 }
                 else
                 {
@@ -79,41 +71,14 @@ namespace EF.Web.Controllers
         }
 
         [HttpPost, ActionName("CreateEditGood")]
-        public ActionResult CreateEditGoodInPost(object mdl)//Goods
+        public ActionResult CreateEditGoodInPost(object mdl)
         {
             if (mdl != null)
             {
                 if (mdl is Goods)
                 {
-                    Goods model = (Goods)mdl;
-
-                    if (model.ID == 0)
-            {
-                model.Name = "";
-                model.Quantity = 1;
-                model.Info = "";
-                goodsRepository.Insert(model);
-            }
-            else
-            {
-                var editModel = goodsRepository.GetById(model.ID);
-                editModel.Name = model.Name; ;
-                editModel.Quantity = model.Quantity;
-                editModel.Info = model.Info;
-                goodsRepository.Update(editModel);
-            }
-
-                    if (model.ID > 0)
-                    {
-                        return RedirectToAction("Index");
-                    }
-                    return View(model);
+                    return View(BL.CreateEditInPost<Goods>(mdl, this.goodsRepository));
                 }
-
-                //if (id is ...)
-                //{
-                //    ...
-                //}
 
                 else
                 {
@@ -131,16 +96,10 @@ namespace EF.Web.Controllers
         {
             if (id != null)
             {
-                if (id is int)
+                if (id is long)
                 {
-                    Goods model = goodsRepository.GetById(id);
-                    return View(model);
+                    return View(BL.Details<Goods>((long)id, this.goodsRepository));
                 }
-
-                //if (id is ...)
-                //{
-                //    ...
-                //}
 
                 else
                 {
@@ -159,17 +118,11 @@ namespace EF.Web.Controllers
         {
             if (id != null)
             {
-                if (id is int)
+                if (id is long)
                 {
-                    Goods model = goodsRepository.GetById(id);
-                    goodsRepository.Delete(model);
+                    BL.ConfirmDelete<Goods>((long)id, this.goodsRepository);
                     return RedirectToAction("Index");
                 }
-
-                //if (id is ...)
-                //{
-                //    ...
-                //}
 
                 else
                 {

@@ -6,11 +6,24 @@ using System.Threading.Tasks;
 
 namespace EF.Core.Data
 {
-    public class Sizes : BaseEntity
+    public class Sizes : IBaseEntity
     {
         public Sizes()
         {
             this.Goods = new HashSet<Goods>();
+        }
+        
+        public long Id
+        {
+            get
+            {
+                return Id;
+            }
+
+            set
+            {
+                Id = value;
+            }
         }
 
         public string Size { get; set; }

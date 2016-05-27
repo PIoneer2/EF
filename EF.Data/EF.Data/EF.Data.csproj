@@ -41,6 +41,15 @@
       <HintPath>..\..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core">
+      <HintPath>..\..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework">
+      <HintPath>..\..\packages\Microsoft.AspNet.Identity.EntityFramework.2.2.1\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Owin">
+      <HintPath>..\..\packages\Microsoft.AspNet.Identity.Owin.2.2.1\lib\net45\Microsoft.AspNet.Identity.Owin.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -53,19 +62,20 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EFDbContext.cs" />
+    <Compile Include="Mapping\AspNetUsersMap.cs" />
     <Compile Include="Mapping\GoodsInTransactionMap.cs" />
     <Compile Include="Mapping\GoodsInWarehausesMap.cs" />
     <Compile Include="Mapping\GoodsMap.cs" />
-    <Compile Include="Mapping\PermissionSetMap.cs" />
-    <Compile Include="Mapping\PermissionsMap.cs" />
     <Compile Include="Mapping\RestrictionsMap.cs" />
     <Compile Include="Mapping\RestrictionsSetMap.cs" />
-    <Compile Include="Mapping\RolesMap.cs" />
+    <Compile Include="Mapping\CustomRolesMap.cs" />
     <Compile Include="Mapping\SizesMap.cs" />
     <Compile Include="Mapping\TranactionTypeMap.cs" />
     <Compile Include="Mapping\TransactionsMap.cs" />
     <Compile Include="Mapping\TypeOfStorageMap.cs" />
-    <Compile Include="Mapping\UsersMap.cs" />
+    <Compile Include="Mapping\CustomUserClaimsMap.cs" />
+    <Compile Include="Mapping\CustomUserLoginsMap.cs" />
+    <Compile Include="Mapping\CustomUserRolesMap.cs" />
     <Compile Include="Mapping\WarehousesPlacesMap.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">

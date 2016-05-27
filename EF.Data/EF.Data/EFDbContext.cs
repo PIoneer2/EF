@@ -6,6 +6,7 @@ using System.Reflection;
 using EF.Core;
 using EF.Core.Data;
 using System.Collections.Generic;
+using System.Data.Entity.Core.Objects.DataClasses;
 
 namespace EF.Data
 {
@@ -14,20 +15,20 @@ namespace EF.Data
         public EFDbContext()
             : base("name=DefaultConnection")
         {
-            //allready don`t need - Migrations enabled
-            //AppDomain.CurrentDomain.SetData("DataDirectory", System.IO.Directory.GetCurrentDirectory());
+
         }
 
-        public new IDbSet<TEntity> Set<TEntity>() where TEntity : BaseEntity
+        //only for I-variant
+        public new IDbSet<TEntity> Set<TEntity>() where TEntity : class, IBaseEntity
         {
             return base.Set<TEntity>();
         }
 
         public class EFDbInitializer : System.Data.Entity.DropCreateDatabaseIfModelChanges<EFDbContext>
+        //public class EFDbInitializer : DropCreateDatabaseAlways<EFDbContext>
         {
             protected override void Seed(EFDbContext context)
             {
-
 
             }
         }
@@ -44,8 +45,11 @@ namespace EF.Data
                 modelBuilder.Configurations.Add(configurationInstance);
             }
             base.OnModelCreating(modelBuilder);
+
         }
 
-        public System.Data.Entity.DbSet<EF.Core.Data.Goods> Goods { get; set; }
+        //public System.Data.Entity.DbSet<EF.Core.Data.Goods> Goods { get; set; }
+        //public DbSet <Order> Orders { get; set; }
+
     }
 }

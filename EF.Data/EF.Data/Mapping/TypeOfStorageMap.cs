@@ -13,8 +13,8 @@ namespace EF.Data.Mapping
     {
         public TypeOfStorageMap()
         {
-            HasKey(t => t.ID);
-            Property(t => t.ID).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
+            HasKey(t => t.Id);
+            Property(t => t.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
             Property(t => t.Type).IsRequired().IsUnicode().IsVariableLength().HasMaxLength(10);
             ToTable("TypeOfStorage");
         }

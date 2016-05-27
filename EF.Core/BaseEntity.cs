@@ -8,6 +8,11 @@ namespace EF.Core
 {
     public abstract class BaseEntity
     {
-            public Int64 ID { get; set; }
+        public long Id { get; set; }
+    }
+
+    public interface IBaseEntity
+    {
+        long Id { get; set; }
     }
 }

@@ -8,8 +8,8 @@ namespace EF.Data.Mapping
     {
         public GoodsMap()
         {
-            HasKey(t => t.ID);
-            Property(t => t.ID).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
+            HasKey(t => t.Id);
+            Property(t => t.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
             Property(t => t.Name).IsRequired().IsUnicode().IsVariableLength().HasMaxLength(50);
             Property(t => t.Quantity).IsRequired();
             Property(t => t.Info).IsOptional().IsUnicode().IsVariableLength().HasMaxLength(50);

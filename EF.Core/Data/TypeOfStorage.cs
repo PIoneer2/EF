@@ -6,11 +6,24 @@ using System.Threading.Tasks;
 
 namespace EF.Core.Data
 {
-    public class TypeOfStorage : BaseEntity
+    public class TypeOfStorage : IBaseEntity
     {
         public TypeOfStorage()
         {
             this.Goods = new HashSet<Goods>();
+        }
+        
+        public long Id
+        {
+            get
+            {
+                return Id;
+            }
+
+            set
+            {
+                Id = value;
+            }
         }
 
         public string Type { get; set; }

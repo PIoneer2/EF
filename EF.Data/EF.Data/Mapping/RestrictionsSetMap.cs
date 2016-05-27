@@ -13,8 +13,8 @@ namespace EF.Data.Mapping
     {
         public RestrictionsSetMap()
         {
-            HasKey(t => t.ID);
-            Property(t => t.ID).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
+            HasKey(t => t.Id);
+            Property(t => t.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
             Property(t => t.RestrictionsId).IsRequired();
             Property(t => t.GoodsId).IsRequired();
             ToTable("RestrictionsSet");

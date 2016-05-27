@@ -13,8 +13,8 @@ namespace EF.Data.Mapping
     {
         public WarehousesPlacesMap()
         {
-            HasKey(t => t.ID);
-            Property(t => t.ID).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
+            HasKey(t => t.Id);
+            Property(t => t.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
             Property(t => t.Adress).IsRequired();
             Property(t => t.Place).IsRequired();
             ToTable("WarehousesPlaces");

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace EF.Core.Data
 {
-    public partial class Goods : BaseEntity
+    public partial class Goods : IBaseEntity
     {
         public Goods()
         {
@@ -20,12 +20,25 @@ namespace EF.Core.Data
         public Int64 TypeOfStorageId { get; set; }
         public Int64 SizesId { get; set; }
         public string Info { get; set; }
+        
+        public long Id
+        {
+            get
+            {
+                return Id;
+            }
+
+            set
+            {
+                Id = value;
+            }
+        }
 
         public virtual ICollection<GoodsInWarehauses> GoodsInWarehauses { get; set; }
         public virtual ICollection<RestrictionsSet> RestrictionsSet { get; set; }
         public virtual ICollection<GoodsInTransaction> GoodsInTransaction { get; set; }
-        public virtual TypeOfStorage TypeOfStorage { get; set; }
-        public virtual Sizes Sizes { get; set; }
+        //public virtual TypeOfStorage TypeOfStorage { get; set; }
+        //public virtual Sizes Sizes { get; set; }
 
     }
 }

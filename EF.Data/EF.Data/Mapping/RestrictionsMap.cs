@@ -13,8 +13,8 @@ namespace EF.Data.Mapping
     {
         public RestrictionsMap()
         {
-            HasKey(t => t.ID);
-            Property(t => t.ID).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
+            HasKey(t => t.Id);
+            Property(t => t.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
             Property(t => t.RestrictionName).IsRequired().IsUnicode().IsVariableLength().HasMaxLength(10);
             ToTable("Restrictions");
         }

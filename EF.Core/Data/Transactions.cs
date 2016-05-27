@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace EF.Core.Data
 {
-    public class Transactions : BaseEntity
+    public class Transactions : IBaseEntity
     {
         public Transactions()
         {
@@ -14,12 +15,22 @@ namespace EF.Core.Data
         }
         
         public string Description { get; set; }
-        public Int64 TranactionTypeId { get; set; }
-        public Int64 UsersId { get; set; }
+        public long TranactionTypeId { get; set; }
+        public long AspNetUsersId { get; set; }
         public DateTime Date { get; set; }
+        
+        public long Id
+        {
+            get
+            {
+                return Id;
+            }
 
-        public virtual TranactionType TranactionType { get; set; }
-        public virtual Users Users { get; set; }
+            set
+            {
+                Id = value;
+            }
+        }
         public virtual ICollection<GoodsInTransaction> GoodsInTransaction { get; set; }
     }
 }

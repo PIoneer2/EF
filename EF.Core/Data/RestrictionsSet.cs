@@ -6,12 +6,25 @@ using System.Threading.Tasks;
 
 namespace EF.Core.Data
 {
-    public class RestrictionsSet : BaseEntity
+    public class RestrictionsSet : IBaseEntity
     {
         public Int64 RestrictionsId { get; set; }
         public Int64 GoodsId { get; set; }
+        
+        public long Id
+        {
+            get
+            {
+                return Id;
+            }
 
-        public virtual Restrictions Restrictions { get; set; }
-        public virtual Goods Goods { get; set; }
+            set
+            {
+                Id = value;
+            }
+        }
+
+        //public virtual Restrictions Restrictions { get; set; }
+        //public virtual Goods Goods { get; set; }
     }
 }

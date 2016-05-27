@@ -11,10 +11,10 @@ namespace EF.Web.Controllers
 {
     public class GoodsInTransactionController : Controller
     {
-        private UnitOfWork unitOfWork;
-        private Repository<GoodsInTransaction> goodsInTransactionsRepository;
+        private EFUnitOfWork unitOfWork;
+        private EFRepository<GoodsInTransaction> goodsInTransactionsRepository;
 
-        public GoodsInTransactionController(UnitOfWork tmpUnit)
+        public GoodsInTransactionController(EFUnitOfWork tmpUnit)
         {
             unitOfWork = tmpUnit;
             goodsInTransactionsRepository = unitOfWork.Repository<GoodsInTransaction>();
@@ -33,9 +33,9 @@ namespace EF.Web.Controllers
             if (id != null)
             {
 
-                if (id is int)
+                if (id is long)
                 {
-                    GoodsInTransaction model = goodsInTransactionsRepository.GetById(id);
+                    GoodsInTransaction model = goodsInTransactionsRepository.GetById((long)id);
                     return View(model);
                 }
 
@@ -60,10 +60,10 @@ namespace EF.Web.Controllers
         {
             if (id != null)
             {
-                if (id is int)
+                if (id is long)
                 {
                 GoodsInTransaction model = new GoodsInTransaction();
-                model = goodsInTransactionsRepository.GetById(id);
+                model = goodsInTransactionsRepository.GetById((long)id);
                 return View(model);
                 }
                 else
@@ -86,7 +86,7 @@ namespace EF.Web.Controllers
                 {
                     GoodsInTransaction model = (GoodsInTransaction)mdl;
 
-                    if (model.ID == 0)
+                    if (model.Id == 0)
             {
                 model.TransactionsId = 1;
                 model.GoodsId = 1;
@@ -95,14 +95,14 @@ namespace EF.Web.Controllers
             }
             else
             {
-                var editModel = goodsInTransactionsRepository.GetById(model.ID);
+                var editModel = goodsInTransactionsRepository.GetById(model.Id);
                 editModel.TransactionsId = model.TransactionsId;
                 editModel.GoodsId = model.GoodsId;
                 editModel.Quantity = model.Quantity;
                 goodsInTransactionsRepository.Update(editModel);
             }
-
-                    if (model.ID > 0)
+                    
+                    if (model.Id > 0)
                     {
                         return RedirectToAction("Index");
                     }
@@ -130,9 +130,9 @@ namespace EF.Web.Controllers
         {
             if (id != null)
             {
-                if (id is int)
+                if (id is long)
                 {
-                    GoodsInTransaction model = goodsInTransactionsRepository.GetById(id);
+                    GoodsInTransaction model = goodsInTransactionsRepository.GetById((long)id);
                     return View(model);
                 }
 
@@ -158,9 +158,9 @@ namespace EF.Web.Controllers
         {
             if (id != null)
             {
-                if (id is int)
+                if (id is long)
                 {
-                    GoodsInTransaction model = goodsInTransactionsRepository.GetById(id);
+                    GoodsInTransaction model = goodsInTransactionsRepository.GetById((long)id);
                     goodsInTransactionsRepository.Delete(model);
                     return RedirectToAction("Index");
                 }
