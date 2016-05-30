@@ -21,18 +21,7 @@ namespace EF.Core.Data
         public Int64 SizesId { get; set; }
         public string Info { get; set; }
         
-        public long Id
-        {
-            get
-            {
-                return Id;
-            }
-
-            set
-            {
-                Id = value;
-            }
-        }
+        public long Id { get; set; }
 
         public virtual ICollection<GoodsInWarehauses> GoodsInWarehauses { get; set; }
         public virtual ICollection<RestrictionsSet> RestrictionsSet { get; set; }

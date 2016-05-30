@@ -4,16 +4,16 @@ using EF.Core.Data;
 
 namespace EF.Data.Mapping
 {
-    class CustomUserClaimsMap : EntityTypeConfiguration<CustomUserClaim>
+    class UserClaimsMap : EntityTypeConfiguration<UserClaim>
     {
-        public CustomUserClaimsMap()
+        public UserClaimsMap()
         {
             HasKey(t => t.Id);
             Property(t => t.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
-            Property(t => t.AspNetUsersId).IsRequired();
+            Property(t => t.UserId).IsRequired();
             Property(t => t.ClaimType).IsUnicode().IsVariableLength().IsMaxLength().IsOptional();
             Property(t => t.ClaimValue).IsUnicode().IsVariableLength().IsMaxLength().IsOptional();
-            ToTable("AspNetUserClaims");
+            ToTable("Claims");
         }
     }
 }

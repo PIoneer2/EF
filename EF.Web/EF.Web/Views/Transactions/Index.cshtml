@@ -21,7 +21,7 @@
                     @Html.DisplayNameFor(model => model.Description)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.UsersId)
+                    @Html.DisplayNameFor(model => model.Id)
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.TranactionTypeId)
@@ -42,7 +42,7 @@
                         @Html.DisplayFor(modelItem => item.Description)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.UsersId)
+                        @Html.DisplayFor(modelItem => item.Id)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.TranactionTypeId)
@@ -52,11 +52,11 @@
                     </td>
                     <td>
                         @Html.ActionLink("Edit", "CreateEditTransaction",
-                        new { id = item.ID }, new { @class = "btn btn-success" }) |
+                        new { id = item.Id }, new { @class = "btn btn-success" }) |
                         @Html.ActionLink("Details", "Details",
-                        new { id = item.ID }, new { @class = "btn btn-primary" }) |
+                        new { id = item.Id }, new { @class = "btn btn-primary" }) |
                         @Html.ActionLink("Delete", "Delete",
-                        new { id = item.ID }, new { @class = "btn btn-danger" })
+                        new { id = item.Id }, new { @class = "btn btn-danger" })
                     </td>
                 </tr>
             }

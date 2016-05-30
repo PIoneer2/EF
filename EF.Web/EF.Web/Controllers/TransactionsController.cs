@@ -19,15 +19,15 @@ namespace EF.Web.Controllers
     {
         private EFUnitOfWork unitOfWork;
         private EFRepository<Transactions> transactionsRepository;
-        private UserManager<ApplicationUser, long> manager;
+        private UserManager<User, long> manager;
 
         public TransactionsController(EFUnitOfWork tmpUnit)
         {
             unitOfWork = tmpUnit;
             transactionsRepository = unitOfWork.Repository<Transactions>();
             
-            var uStore = new CustomUserStore(new ApplicationDbContext());
-            manager = new UserManager<ApplicationUser, long>(uStore);
+            var uStore = new CustomUserStore(EFDbContext.Create());
+            manager = new UserManager<User, long>(uStore);
             
         }
 
@@ -93,7 +93,7 @@ namespace EF.Web.Controllers
         public async Task<ActionResult> CreateEditTransactionInPost([Bind(Include = "Id,Description,TranactionTypeId,AspNetUsersId,Date")] Transactions mdl) //не работает после рефакторинга
         {
                     var currentUser = await manager.FindByIdAsync(User.Identity.GetUserId<long>());
-                    mdl.AspNetUsersId = currentUser.Id;
+                    mdl.UserId = currentUser.Id;
                     return View(BL.CreateEditInPost<Transactions>(mdl, this.transactionsRepository));
         }
 

@@ -13,41 +13,24 @@ using EF.Web.Models;
 namespace EF.Web.Models
 {
     // You can add profile data for the user by adding more properties to your ApplicationUser class, please visit http://go.microsoft.com/fwlink/?LinkID=317594 to learn more.
-    public class ApplicationUser : AspNetUsers
+    public class ApplicationUser //: AspNetUsers
     {
         public ApplicationUser() 
         {
 
         }
-        
-        public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser, long> manager)
+        /*
+        public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<AspNetUsers, long> manager)
         {
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
             var userIdentity = await manager.CreateIdentityAsync(this, DefaultAuthenticationTypes.ApplicationCookie);
             // Add custom user claims here
             return userIdentity;
         }
-
+        */
     }
 
-    public class CustomUserStore : UserStore<ApplicationUser, CustomRole, long,
-        CustomUserLogin, CustomUserRole, CustomUserClaim>
-    {
-        public CustomUserStore(ApplicationDbContext context)
-            : base(context)
-        {
-        }
-    }
-
-    public class CustomRoleStore : RoleStore<CustomRole, long, CustomUserRole>
-    {
-        public CustomRoleStore(ApplicationDbContext context)
-            : base(context)
-        {
-        }
-    }
-
-    public class ApplicationDbContext : EFDbContext
+    public class ApplicationDbContext //: EFDbContext
     //EFDbContext
     {
         //public new DbSet<ApplicationUser> Users { get; set; }
@@ -63,15 +46,16 @@ namespace EF.Web.Models
             : base("DefaultConnection", throwIfV1Schema: false)
         {
         } */
-
+        
         public ApplicationDbContext()
-            : base()
+            //: base()
         {
         }
-
+        /*
         public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();
         }
+        */
     }
 }

@@ -16,21 +16,10 @@ namespace EF.Core.Data
         
         public string Description { get; set; }
         public long TranactionTypeId { get; set; }
-        public long AspNetUsersId { get; set; }
+        public long UserId { get; set; }
         public DateTime Date { get; set; }
         
-        public long Id
-        {
-            get
-            {
-                return Id;
-            }
-
-            set
-            {
-                Id = value;
-            }
-        }
+        public long Id { get; set; }
         public virtual ICollection<GoodsInTransaction> GoodsInTransaction { get; set; }
     }
 }

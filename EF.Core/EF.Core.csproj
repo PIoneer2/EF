@@ -87,11 +87,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseEntity.cs" />
-    <Compile Include="Data\CustomRole.cs" />
-    <Compile Include="Data\CustomUserClaim.cs" />
-    <Compile Include="Data\CustomUserLogin.cs" />
-    <Compile Include="Data\CustomUserRole.cs" />
-    <Compile Include="Data\AspNetUsers.cs" />
+    <Compile Include="Data\Role.cs" />
+    <Compile Include="Data\UserClaim.cs" />
+    <Compile Include="Data\UserLogin.cs" />
+    <Compile Include="Data\UserRole.cs" />
+    <Compile Include="Data\User.cs" />
     <Compile Include="Data\Goods.cs" />
     <Compile Include="Data\GoodsInTransaction.cs" />
     <Compile Include="Data\GoodsInWarehauses.cs" />

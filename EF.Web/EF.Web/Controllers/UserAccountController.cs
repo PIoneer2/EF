@@ -36,7 +36,7 @@ namespace EF.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Login(/*LoginInputModel model / Users model*/ AspNetUsers model)
+        public ActionResult Login(/*LoginInputModel model / Users model*/ User model)
         {/*
             if (ModelState.IsValid)
             {
@@ -86,7 +86,7 @@ namespace EF.Web.Controllers
 
         [ValidateAntiForgeryToken]
         [HttpPost]
-        public ActionResult Register(/*RegisterInputModel model/ Users model*/AspNetUsers model)
+        public ActionResult Register(/*RegisterInputModel model/ Users model*/User model)
         {/*
             if (ModelState.IsValid)
             {

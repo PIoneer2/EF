@@ -13,18 +13,7 @@ namespace EF.Core.Data
             this.RestrictionsSet = new HashSet<RestrictionsSet>();
         }
         
-        public long Id
-        {
-            get
-            {
-                return Id;
-            }
-
-            set
-            {
-                Id = value;
-            }
-        }
+        public long Id { get; set; }
 
         public string RestrictionName { get; set; }
 

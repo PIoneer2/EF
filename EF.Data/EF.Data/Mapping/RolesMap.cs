@@ -4,14 +4,14 @@ using EF.Core.Data;
 
 namespace EF.Data.Mapping
 {
-    public class CustomRolesMap : EntityTypeConfiguration<CustomRole>
+    public class RolesMap : EntityTypeConfiguration<Role>
     {
-        public CustomRolesMap()
+        public RolesMap()
         {
             HasKey(t => t.Id);
             Property(t => t.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
             Property(t => t.Name).IsUnicode().IsVariableLength().HasMaxLength(256).IsRequired();
-            ToTable("AspNetRoles");
+            ToTable("Roles");
         }
     }
 }

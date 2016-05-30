@@ -4,15 +4,16 @@ namespace EF.Web.Migrations
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
+    using EF.Data;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<EF.Data.EFDbContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<EFDbContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
         }
 
-        protected override void Seed(EF.Data.EFDbContext context)
+        protected override void Seed(EFDbContext context)
         {
             //  This method will be called after migrating to the latest version.
 

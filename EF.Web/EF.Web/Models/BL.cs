@@ -24,7 +24,7 @@ namespace EF.Web.Models
                     model.Date = System.DateTime.Now;
                     model.Description = "";
                     model.TranactionTypeId = 1;
-                    model.AspNetUsersId = 0;
+                    model.UserId = 0;
                     transactionsRepository.Insert(model);
                 }
 
@@ -33,7 +33,7 @@ namespace EF.Web.Models
                     var editModel = transactionsRepository.GetById(model.Id);
                     editModel.Description = model.Description; ;
                     editModel.TranactionTypeId = model.TranactionTypeId;
-                    editModel.AspNetUsersId = model.AspNetUsersId;
+                    editModel.UserId = model.UserId;
                     editModel.Date = model.Date;
                     transactionsRepository.Update(editModel);
                 }

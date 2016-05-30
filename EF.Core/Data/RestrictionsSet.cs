@@ -11,18 +11,7 @@ namespace EF.Core.Data
         public Int64 RestrictionsId { get; set; }
         public Int64 GoodsId { get; set; }
         
-        public long Id
-        {
-            get
-            {
-                return Id;
-            }
-
-            set
-            {
-                Id = value;
-            }
-        }
+        public long Id { get; set; }
 
         //public virtual Restrictions Restrictions { get; set; }
         //public virtual Goods Goods { get; set; }

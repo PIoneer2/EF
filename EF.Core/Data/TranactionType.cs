@@ -13,18 +13,7 @@ namespace EF.Core.Data
             this.Transactions = new HashSet<Transactions>();
         }
         
-        public long Id
-        {
-            get
-            {
-                return Id;
-            }
-
-            set
-            {
-                Id = value;
-            }
-        }
+        public long Id { get; set; }
 
         public string Name { get; set; }
 

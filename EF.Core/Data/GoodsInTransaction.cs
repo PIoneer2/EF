@@ -16,18 +16,7 @@ namespace EF.Core.Data
         //public virtual Transactions Transactions { get; set; }
         //public virtual Goods Goods { get; set; }
         
-        public long Id
-        {
-            get
-            {
-                return Id;
-            }
-
-            set
-            {
-                Id = value;
-            }
-        }
+        public long Id { get; set; }
     }
 
 }

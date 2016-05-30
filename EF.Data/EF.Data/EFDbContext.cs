@@ -18,6 +18,11 @@ namespace EF.Data
 
         }
 
+        public static EFDbContext Create()
+        {
+            return new EFDbContext();
+        }
+
         //only for I-variant
         public new IDbSet<TEntity> Set<TEntity>() where TEntity : class, IBaseEntity
         {

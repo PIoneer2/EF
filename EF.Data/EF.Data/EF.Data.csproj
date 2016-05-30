@@ -61,21 +61,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CustomRoleStore.cs" />
+    <Compile Include="CustomUserStore.cs" />
     <Compile Include="EFDbContext.cs" />
-    <Compile Include="Mapping\AspNetUsersMap.cs" />
+    <Compile Include="Mapping\UsersMap.cs" />
     <Compile Include="Mapping\GoodsInTransactionMap.cs" />
     <Compile Include="Mapping\GoodsInWarehausesMap.cs" />
     <Compile Include="Mapping\GoodsMap.cs" />
     <Compile Include="Mapping\RestrictionsMap.cs" />
     <Compile Include="Mapping\RestrictionsSetMap.cs" />
-    <Compile Include="Mapping\CustomRolesMap.cs" />
+    <Compile Include="Mapping\RolesMap.cs" />
     <Compile Include="Mapping\SizesMap.cs" />
     <Compile Include="Mapping\TranactionTypeMap.cs" />
     <Compile Include="Mapping\TransactionsMap.cs" />
     <Compile Include="Mapping\TypeOfStorageMap.cs" />
-    <Compile Include="Mapping\CustomUserClaimsMap.cs" />
-    <Compile Include="Mapping\CustomUserLoginsMap.cs" />
-    <Compile Include="Mapping\CustomUserRolesMap.cs" />
+    <Compile Include="Mapping\UserClaimsMap.cs" />
+    <Compile Include="Mapping\UserLoginsMap.cs" />
+    <Compile Include="Mapping\UserRolesMap.cs" />
     <Compile Include="Mapping\WarehousesPlacesMap.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
