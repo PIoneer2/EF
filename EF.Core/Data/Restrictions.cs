@@ -14,7 +14,6 @@ namespace EF.Core.Data
         }
         
         public long Id { get; set; }
-
         public string RestrictionName { get; set; }
 
         public virtual ICollection<RestrictionsSet> RestrictionsSet { get; set; }

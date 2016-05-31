@@ -87,10 +87,10 @@ namespace EF.Web.Models
 
             //регистрация всех порожденных классов Controller из сборки, в которой есть класс AccountController
             container.Register(Classes.FromAssemblyContaining<AccountController>().BasedOn<Controller>().LifestylePerWebRequest());//регистрирует HomeController
-            //container.Register(Classes.FromAssemblyContaining<EFUnitOfWork>().BasedOn<IUnitOfWork>().LifestylePerWebRequest());
             container.Register(Classes.FromAssemblyContaining<EFUnitOfWork>().BasedOn<EFUnitOfWork>().LifestylePerWebRequest());
             container.Register(Classes.FromAssemblyContaining<EFRepository<IBaseEntity>>().BasedOn<EFRepository<IBaseEntity>>().LifestylePerWebRequest());
             container.Register(Classes.FromAssemblyContaining<EFDbContext>().BasedOn<EFDbContext>().LifestylePerWebRequest());
+            //container.Register(Classes.FromAssemblyContaining<EFUnitOfWork>().BasedOn<IUnitOfWork>().LifestylePerWebRequest());
             //container.Register(Classes            .FromAssemblyInThisApplication()            .BasedOn<IController>()            .WithServiceAllInterfaces()            .LifestylePerWebRequest());
 
             //или

@@ -13,25 +13,48 @@ namespace EF.Web.Models
 {
     public static class BL
     {
-        public static object CreateEditInPost<T>(object mdl, object transRep) where T : class, IBaseEntity
+        public static object CreateBlankModel<T>(object transRep, long UserId) where T : class, IBaseEntity
         {
             if (typeof(T) == typeof(Transactions))
             {
+                
+                EFRepository<Transactions> transactionsRepository = (EFRepository<Transactions>)transRep;
+                Transactions model = new Transactions();
+                model.Date = System.DateTime.Now;
+                model.Description = "";
+                model.TranactionTypeId = 1;
+                model.UserId = UserId;
+                transactionsRepository.Insert(model);
+                //model = transactionsRepository.GetById(model.Id);
+                return model;
+            }
+            else
+            {
+                //заглушка
+                Transactions model = new Transactions();
+                return model;
+            }
+        }
+
+        public static object CreateEditInPost<T>(object mdl, object transRep, long UserId) where T : class, IBaseEntity
+        {
+            if (typeof(T) == typeof(Transactions))
+            {
+
                 Transactions model = (Transactions)mdl;
                 EFRepository<Transactions> transactionsRepository = (EFRepository<Transactions>)transRep;
-                if (0 == model.Id)
+                if (model.Id == 0)
                 {
                     model.Date = System.DateTime.Now;
                     model.Description = "";
                     model.TranactionTypeId = 1;
-                    model.UserId = 0;
+                    model.UserId = UserId;
                     transactionsRepository.Insert(model);
                 }
 
-                else
-                {
-                    var editModel = transactionsRepository.GetById(model.Id);
-                    editModel.Description = model.Description; ;
+                else { 
+                var editModel = transactionsRepository.GetById(model.Id);
+                    editModel.Description = model.Description;
                     editModel.TranactionTypeId = model.TranactionTypeId;
                     editModel.UserId = model.UserId;
                     editModel.Date = model.Date;
@@ -65,7 +88,24 @@ namespace EF.Web.Models
 
             //заглушка для компилятора
             else {
-                string error = "Wrong type at creation";
+                string error = "Wrong type at CreateEditInPost<T> creation";
+                return error;
+            }
+        }
+
+        public static object CreateEdit<T>(object transRep, long id = 0) where T : class, IBaseEntity
+        {
+            if (typeof(T) == typeof(Transactions))
+            {
+                //Transactions model = new Transactions();
+                EFRepository<T> tmpRepository = (EFRepository<T>)transRep;
+                T model = tmpRepository.GetById(id);
+                return model;
+            }
+            else
+            {
+                //заглушка для компилятора
+                string error = "Wrong type at CreateEdit<T> creation";
                 return error;
             }
         }

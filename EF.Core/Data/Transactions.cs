@@ -18,8 +18,10 @@ namespace EF.Core.Data
         public long TranactionTypeId { get; set; }
         public long UserId { get; set; }
         public DateTime Date { get; set; }
-        
         public long Id { get; set; }
+
         public virtual ICollection<GoodsInTransaction> GoodsInTransaction { get; set; }
+        public virtual TranactionType TranactionType { get; set; }
+        public virtual User Users { get; set; }
     }
 }

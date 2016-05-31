@@ -92,11 +92,10 @@ namespace EF.Data
             this.context = context;
         }
 
-        /*
         public EFDbContext ContexGetter()
         {
             return this.context;
-        }*/
+        }
 
         public EFUnitOfWork()
         {

@@ -21,19 +21,19 @@
             </div>
 
             <div class="form-group">
-                @Html.LabelFor(model => model.UsersId,
+                @Html.LabelFor(model => model.Users.UserName,
                 new { @class = "col-lg-1 control-label" })
                 <div class="col-lg-9">
-                    @Html.DisplayFor(model => model.UsersId,
+                    @Html.DisplayFor(model => model.Users.UserName,
                     new { @class = "form-control" })
                 </div>
             </div>
 
             <div class="form-group">
-                @Html.LabelFor(model => model.TranactionTypeId,
+                @Html.LabelFor(model => model.TranactionType.Name,
                 new { @class = "col-lg-1 control-label" })
                 <div class="col-lg-9">
-                    @Html.DisplayFor(model => model.TranactionTypeId,
+                    @Html.DisplayFor(model => model.TranactionType.Name,
                     new { @class = "form-control" })
                 </div>
             </div>

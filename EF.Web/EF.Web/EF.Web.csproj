@@ -233,6 +233,10 @@
     <Compile Include="Migrations\201605271604423_one.Designer.cs">
       <DependentUpon>201605271604423_one.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201605301356442_two.cs" />
+    <Compile Include="Migrations\201605301356442_two.Designer.cs">
+      <DependentUpon>201605301356442_two.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ApplicationCastleInstaller.cs" />
@@ -350,6 +354,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201605271604423_one.resx">
       <DependentUpon>201605271604423_one.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201605301356442_two.resx">
+      <DependentUpon>201605301356442_two.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

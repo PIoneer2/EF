@@ -25,42 +25,33 @@ namespace EF.Web.Controllers
         {
             unitOfWork = tmpUnit;
             transactionsRepository = unitOfWork.Repository<Transactions>();
-            
-            var uStore = new CustomUserStore(EFDbContext.Create());
+
+            var uStore = new CustomUserStore(tmpUnit.ContexGetter());
             manager = new UserManager<User, long>(uStore);
-            
+
         }
 
         // GET: Transactions
-        
-        public ActionResult Index() //my
+        public ActionResult Index() //my transactions
         {
             var currentUser = manager.FindById(User.Identity.GetUserId<long>());
             return View(BL.Index<Transactions>(this.transactionsRepository, currentUser.Id));
         }
 
-        //GET: Transactions/My
+        //GET: Transactions
         [Authorize(Roles = "Admin")]
-        public ActionResult all()    //only my transactions
+        public ActionResult All()    //all transactions
         {
-            
             return View(BL.Index<Transactions>(this.transactionsRepository));
         }
 
         // GET: Transactions/Details/5
         public ActionResult Details(object id)
         {
-            if (id != null)
+            long outLong;
+            if (long.TryParse(id.ToString(), out outLong))
             {
-                if (id is int)
-                {
-                    return View(BL.Details<Transactions>((int)id, this.transactionsRepository));
-                }
-
-                else
-                {
-                    return RedirectToAction("Index");
-                }
+                return View(BL.Details<Transactions>(outLong, this.transactionsRepository));
             }
             else
             {
@@ -69,49 +60,40 @@ namespace EF.Web.Controllers
         }
 
         // GET: Transactions/CreateEditTransaction
-        public ActionResult CreateEditTransaction(object id)//должно работать после рефакторинга
+        public ActionResult CreateEditTransaction(object id)
         {
-            if (id != null)
-            {
-                int outInt;
-                if (int.TryParse(id.ToString(), out outInt))
-                {
-                    return View(BL.Details<Transactions>(outInt, this.transactionsRepository));
-                }
-                else
-                {
-                    return RedirectToAction("Index");
-                }
+            long outLong;
+            if (long.TryParse(id.ToString(), out outLong))
+            { //редактирование
+                return View(BL.Details<Transactions>(outLong, this.transactionsRepository));
             }
             else
-            {
-                return RedirectToAction("Index");
+            {//создание новой записи
+             //вставить стартовые данные в пустые данные
+                var currentUser = manager.FindById(User.Identity.GetUserId<long>());
+                return View(BL.CreateBlankModel<Transactions>(this.transactionsRepository, currentUser.Id));
             }
         }
 
         [HttpPost, ActionName("CreateEditTransaction")]
-        public async Task<ActionResult> CreateEditTransactionInPost([Bind(Include = "Id,Description,TranactionTypeId,AspNetUsersId,Date")] Transactions mdl) //не работает после рефакторинга
+        public async Task<ActionResult> CreateEditTransactionInPost([Bind(Include = "Id,Description,TranactionTypeId,UserId,Date")] Transactions mdl) //не работает после рефакторинга
         {
-                    var currentUser = await manager.FindByIdAsync(User.Identity.GetUserId<long>());
-                    mdl.UserId = currentUser.Id;
-                    return View(BL.CreateEditInPost<Transactions>(mdl, this.transactionsRepository));
+            var currentUser = await manager.FindByIdAsync(User.Identity.GetUserId<long>());
+            //mdl.UserId = currentUser.Id;
+            BL.CreateEditInPost<Transactions>(mdl, this.transactionsRepository, currentUser.Id);
+            //return View();
+            return RedirectToAction("Index");
         }
 
         // GET: Transactions/Delete/5
         public ActionResult Delete(object id)//не работает после рефакторинга
         {
-            if (id != null)
+            long outLong;
+            if (long.TryParse(id.ToString(), out outLong))
             {
-                if (id is int)
-                {
-                    return View(BL.Details<Transactions>((int)id, this.transactionsRepository));
-                }
-
-                else
-                {
-                    return RedirectToAction("Index");
-                }
+                return View(BL.Details<Transactions>(outLong, this.transactionsRepository));
             }
+
             else
             {
                 return RedirectToAction("Index");
@@ -122,23 +104,16 @@ namespace EF.Web.Controllers
         [HttpPost, ActionName("Delete")]
         public ActionResult ConfirmDelete(object id)//не работает после рефакторинга
         {
-            if (id != null)
-            {
-                if (id is int)
-                {
-                    BL.ConfirmDelete<Transactions>((int)id, this.transactionsRepository);
-                    return RedirectToAction("Index");
-                }
+            long outLong;
+            if (long.TryParse(id.ToString(), out outLong)) { 
+            BL.ConfirmDelete<Transactions>(outLong, this.transactionsRepository);
+            return RedirectToAction("Index");
+        } 
 
                 else
                 {
                     return RedirectToAction("Index");
                 }
-            }
-            else
-            {
-                return RedirectToAction("Index");
-            }
         }
         protected override void Dispose(bool disposing)
         {

@@ -9,6 +9,8 @@ using System.Web.Mvc;
 using EF.Core.Data;
 using EF.Data;
 using EF.Web.Models;
+using Microsoft.AspNet.Identity;
+using System.Threading.Tasks;
 
 namespace EF.Web.Controllers
 {
@@ -16,11 +18,15 @@ namespace EF.Web.Controllers
     {
         private EFUnitOfWork unitOfWork;
         private EFRepository<Goods> goodsRepository;
+        private UserManager<User, long> manager;
 
         public GoodsController(EFUnitOfWork tmpUnit)
         {
             unitOfWork = tmpUnit;
             goodsRepository = unitOfWork.Repository<Goods>();
+
+            var uStore = new CustomUserStore(tmpUnit.ContexGetter());
+            manager = new UserManager<User, long>(uStore);
         }
 
         public ActionResult Index()
@@ -71,13 +77,14 @@ namespace EF.Web.Controllers
         }
 
         [HttpPost, ActionName("CreateEditGood")]
-        public ActionResult CreateEditGoodInPost(object mdl)
+        public async Task<ActionResult> CreateEditGoodInPost(object mdl)
         {
             if (mdl != null)
             {
                 if (mdl is Goods)
                 {
-                    return View(BL.CreateEditInPost<Goods>(mdl, this.goodsRepository));
+                    var currentUser = await manager.FindByIdAsync(User.Identity.GetUserId<long>());
+                    return View(BL.CreateEditInPost<Goods>(mdl, this.goodsRepository, currentUser.Id));
                 }
 
                 else

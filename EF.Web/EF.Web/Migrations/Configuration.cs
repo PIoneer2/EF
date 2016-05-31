@@ -9,7 +9,7 @@ namespace EF.Web.Migrations
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = false;
+            AutomaticMigrationsEnabled = true;
         }
 
         protected override void Seed(EF.Data.EFDbContext context)

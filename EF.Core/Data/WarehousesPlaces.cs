@@ -14,7 +14,6 @@ namespace EF.Core.Data
         }
         
         public long Id { get; set; }
-
         public string Adress { get; set; }
         public string Place { get; set; }
 

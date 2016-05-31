@@ -25,8 +25,8 @@ namespace EF.Core.Data
         //
         // Сводка:
         //     User Id for the user who owns this login
-        public override long UserId { get; set; }   //дублирование UserId & Id
-        public long Id { get; set; }                //дублирование UserId & Id
+        public override long UserId { get; set; }   
+        public long Id { get; set; }                
 
         public UserLogin()
         {
