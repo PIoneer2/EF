@@ -25,13 +25,13 @@ namespace EF.Web.Models
                 model.TranactionTypeId = 1;
                 model.UserId = UserId;
                 transactionsRepository.Insert(model);
-                //model = transactionsRepository.GetById(model.Id);
                 return model;
             }
             else
             {
                 //заглушка
-                Transactions model = new Transactions();
+                EFRepository<T> tmpRepository = (EFRepository<T>)transRep;
+                T model = tmpRepository.GetById(0);
                 return model;
             }
         }
@@ -43,23 +43,14 @@ namespace EF.Web.Models
 
                 Transactions model = (Transactions)mdl;
                 EFRepository<Transactions> transactionsRepository = (EFRepository<Transactions>)transRep;
-                if (model.Id == 0)
-                {
-                    model.Date = System.DateTime.Now;
-                    model.Description = "";
-                    model.TranactionTypeId = 1;
-                    model.UserId = UserId;
-                    transactionsRepository.Insert(model);
-                }
-
-                else { 
+               
                 var editModel = transactionsRepository.GetById(model.Id);
                     editModel.Description = model.Description;
                     editModel.TranactionTypeId = model.TranactionTypeId;
                     editModel.UserId = model.UserId;
                     editModel.Date = model.Date;
                     transactionsRepository.Update(editModel);
-                }
+              
                 return model;
             }
 
@@ -97,7 +88,6 @@ namespace EF.Web.Models
         {
             if (typeof(T) == typeof(Transactions))
             {
-                //Transactions model = new Transactions();
                 EFRepository<T> tmpRepository = (EFRepository<T>)transRep;
                 T model = tmpRepository.GetById(id);
                 return model;
@@ -113,15 +103,17 @@ namespace EF.Web.Models
         public static object Index<T>(object transRep, long UserId = 0) where T : class, IBaseEntity
         {
             EFRepository<T> tmpRepository = (EFRepository<T>)transRep;
-            IEnumerable<T> typedEntities = tmpRepository.Table.ToList();
-            
+            List<T> allEntities = tmpRepository.Table.ToList();
             if (UserId != 0)
             {
-                //выбор транзакций по ИД пользователя, который запрашивает выборку
-                //List<T> Entities = typedEntities.ToListAsync();
-                //Entities = Entities.Where(e => e.User.Id == UserId);//выборка в репозитории работает только по long Id
+                if (typeof(T) == typeof(Transactions))
+                {
+                    List<Transactions> selectedEntities = allEntities.OfType<Transactions>().ToList();
+                    List<Transactions> finalEntities = selectedEntities.Where(m => m.UserId == UserId).ToList();
+                    return finalEntities;
+                }
             }
-            return typedEntities;
+            return allEntities;
         }
 
         public static object Details<T>(long id, object transRep) where T : class, IBaseEntity

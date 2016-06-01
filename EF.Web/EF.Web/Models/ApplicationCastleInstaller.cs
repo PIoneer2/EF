@@ -12,6 +12,9 @@ using BrockAllen.MembershipReboot.WebHost;
 using EF.Web.Controllers;
 using System.Data.Entity;
 using EF.Core;
+using Microsoft.AspNet.Identity;
+using System.Web;
+using Microsoft.AspNet.Identity.Owin;
 
 namespace EF.Web.Models
 {
@@ -21,7 +24,7 @@ namespace EF.Web.Models
         {
             //установка параметра для потроения UnitOfWork
             //container.Register(Component.For<IDisposable>().ImplementedBy<UnitOfWork>().DynamicParameters((r, k) => { k["context"] = new EFDbContext(); }).LifestylePerWebRequest());
-            
+
             //установка параметра для потроения Repository<T>
             //container.Register(Component.For(typeof(Repository<>)).DynamicParameters((r, k) => { k["context"] = new EFDbContext(); }).LifestylePerWebRequest());
 
@@ -71,7 +74,7 @@ namespace EF.Web.Models
             .OnCreate((kernel, instance) => instance.unitOfWork = new EFDbContext())
             );
             container.Register(
-           Component.For(typeof(Controller))
+            Component.For(typeof(Controller))
            .DependsOn(Property.ForKey("unitOfWork").Eq(new UnitOfWork()))
            );
              */
@@ -84,9 +87,18 @@ namespace EF.Web.Models
             */
             //container.Register(Component.For<IUserAccountRepository>().ImplementedBy<DefaultUserAccountRepository>().LifestylePerWebRequest());
 
+            /*
+            container.Register(Component.For<UserManager<EF.Core.Data.User, long>>()
+            .UsingFactoryMethod((kernel, creationContext) =>
+            new UserManager<EF.Core.Data.User, long>(new CustomUserStore(new EFDbContext())))
+            .LifestylePerWebRequest()); //работает для UserManager
+            */
 
-            //регистрация всех порожденных классов Controller из сборки, в которой есть класс AccountController
-            container.Register(Classes.FromAssemblyContaining<AccountController>().BasedOn<Controller>().LifestylePerWebRequest());//регистрирует HomeController
+            container.Register(Classes.FromAssemblyContaining<AccountController>().BasedOn<Controller>().LifestylePerWebRequest()); //регистрирует HomeController
+
+            container.Register(Component.For(typeof(UserManager<EF.Core.Data.User, long>)).LifestylePerWebRequest());
+            container.Register(Component.For<IUserStore<EF.Core.Data.User, long>>().ImplementedBy<CustomUserStore>().LifestylePerWebRequest());
+
             container.Register(Classes.FromAssemblyContaining<EFUnitOfWork>().BasedOn<EFUnitOfWork>().LifestylePerWebRequest());
             container.Register(Classes.FromAssemblyContaining<EFRepository<IBaseEntity>>().BasedOn<EFRepository<IBaseEntity>>().LifestylePerWebRequest());
             container.Register(Classes.FromAssemblyContaining<EFDbContext>().BasedOn<EFDbContext>().LifestylePerWebRequest());

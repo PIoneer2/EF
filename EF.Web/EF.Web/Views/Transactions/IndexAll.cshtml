@@ -14,10 +14,8 @@
            href="@Url.Action("CreateEditTransaction")" class="btn btn-success">
             <span class="glyphicon glyphicon-plus"></span>&nbsp; Transaction
         </a>
-        @if (@User.IsInRole("Admin"))
-        {
-            @Html.ActionLink("View all transactions", "IndexAll", "Transactions")
-        }
+        @Html.ActionLink("View all transactions", "IndexAll", "Transactions")
+
         <table class="table" style="margin: 4px">
             <tr>
                 <th>

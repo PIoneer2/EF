@@ -21,26 +21,24 @@ namespace EF.Web.Controllers
         private EFRepository<Transactions> transactionsRepository;
         private UserManager<User, long> manager;
 
-        public TransactionsController(EFUnitOfWork tmpUnit)
+        public TransactionsController(EFUnitOfWork tmpUnit, UserManager<EF.Core.Data.User, long> tmpUserManager)
         {
             unitOfWork = tmpUnit;
             transactionsRepository = unitOfWork.Repository<Transactions>();
-
-            var uStore = new CustomUserStore(tmpUnit.ContexGetter());
-            manager = new UserManager<User, long>(uStore);
-
+            manager = tmpUserManager;
         }
 
         // GET: Transactions
         public ActionResult Index() //my transactions
         {
             var currentUser = manager.FindById(User.Identity.GetUserId<long>());
+            //if (currentUser.Roles.Contains())
             return View(BL.Index<Transactions>(this.transactionsRepository, currentUser.Id));
         }
 
         //GET: Transactions
         [Authorize(Roles = "Admin")]
-        public ActionResult All()    //all transactions
+        public ActionResult IndexAll()    //all transactions
         {
             return View(BL.Index<Transactions>(this.transactionsRepository));
         }
