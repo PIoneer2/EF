@@ -96,12 +96,15 @@ namespace EF.Web.Models
 
             container.Register(Classes.FromAssemblyContaining<AccountController>().BasedOn<Controller>().LifestylePerWebRequest()); //регистрирует HomeController
 
+            //ввод ServiceLocator - коммент 5 рабочих строк
+            /*
             container.Register(Component.For(typeof(UserManager<EF.Core.Data.User, long>)).LifestylePerWebRequest());
             container.Register(Component.For<IUserStore<EF.Core.Data.User, long>>().ImplementedBy<CustomUserStore>().LifestylePerWebRequest());
-
             container.Register(Classes.FromAssemblyContaining<EFUnitOfWork>().BasedOn<EFUnitOfWork>().LifestylePerWebRequest());
             container.Register(Classes.FromAssemblyContaining<EFRepository<IBaseEntity>>().BasedOn<EFRepository<IBaseEntity>>().LifestylePerWebRequest());
             container.Register(Classes.FromAssemblyContaining<EFDbContext>().BasedOn<EFDbContext>().LifestylePerWebRequest());
+            */
+            
             //container.Register(Classes.FromAssemblyContaining<EFUnitOfWork>().BasedOn<IUnitOfWork>().LifestylePerWebRequest());
             //container.Register(Classes            .FromAssemblyInThisApplication()            .BasedOn<IController>()            .WithServiceAllInterfaces()            .LifestylePerWebRequest());
 

@@ -62,6 +62,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CustomRoleStore.cs" />
+    <Compile Include="CustomUserManager.cs" />
     <Compile Include="CustomUserStore.cs" />
     <Compile Include="EFDbContext.cs" />
     <Compile Include="Mapping\UsersMap.cs" />
@@ -85,8 +86,8 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Include="Repository.cs" />
-    <Compile Include="UnitOfWork.cs" />
+    <Compile Include="EFRepository.cs" />
+    <Compile Include="EFUnitOfWork.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\EF.Core\EF.Core.csproj">

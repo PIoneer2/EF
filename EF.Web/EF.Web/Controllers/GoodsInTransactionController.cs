@@ -11,8 +11,10 @@ namespace EF.Web.Controllers
 {
     public class GoodsInTransactionController : Controller
     {
-        private EFUnitOfWork unitOfWork;
-        private EFRepository<GoodsInTransaction> goodsInTransactionsRepository;
+        private IUnitOfWork unitOfWork;
+        private IRepository<GoodsInTransaction> goodsInTransactionsRepository;
+        private IUserManager manager;
+        private IBusinessLogic logic;
 
         public GoodsInTransactionController(EFUnitOfWork tmpUnit)
         {

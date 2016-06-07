@@ -16,7 +16,7 @@
         </a>
         @if (@User.IsInRole("Admin"))
         {
-            @Html.ActionLink("View all transactions", "IndexAll", "Transactions")
+            @Html.ActionLink("View all transactions", "IndexAll", "Transactions", new { @class = "btn btn-danger" })
         }
         <table class="table" style="margin: 4px">
             <tr>

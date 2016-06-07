@@ -237,14 +237,18 @@
     <Compile Include="Migrations\201605301356442_two.Designer.cs">
       <DependentUpon>201605301356442_two.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201606031405350_three.cs" />
+    <Compile Include="Migrations\201606031405350_three.Designer.cs">
+      <DependentUpon>201606031405350_three.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ApplicationCastleInstaller.cs" />
-    <Compile Include="Models\ASPNetUsersStarter.cs" />
-    <Compile Include="Models\BL.cs" />
+    <Compile Include="Models\EFBusinessLogic.cs" />
     <Compile Include="Models\CastleControllerFactory.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\EFServiceLocator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -357,6 +361,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201605301356442_two.resx">
       <DependentUpon>201605301356442_two.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201606031405350_three.resx">
+      <DependentUpon>201606031405350_three.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

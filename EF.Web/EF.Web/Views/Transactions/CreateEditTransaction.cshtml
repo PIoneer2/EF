@@ -15,25 +15,29 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.Description,
                     new { @class = "col-lg-2 control-label" })
+
                     <div class="col-lg-9">
                         @Html.TextBoxFor(model => model.Description,
                         new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Description)
                     </div>
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(model => model.UserId,
                     new { @class = "col-lg-2 control-label" })
                     <div class="col-lg-9">
-                        @Html.TextBoxFor(model => model.UserId,
-                        new { @class = "form-control" })
+                        @Html.DropDownList("UserId", ViewBag.UserId as SelectList)
+                        @Html.ValidationMessageFor(model => model.UserId)
+                        
                     </div>
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(model => model.TranactionTypeId,
                     new { @class = "col-lg-2 control-label" })
                     <div class="col-lg-9">
-                        @Html.TextBoxFor(model => model.TranactionTypeId,
-                        new { @class = "form-control" })
+                        @Html.DropDownList("TranactionTypeId", ViewBag.TranactionTypeId as SelectList)
+                        @Html.ValidationMessageFor(model => model.TranactionTypeId)
+                        
                     </div>
                 </div>
                 <div class="form-group">
@@ -41,7 +45,8 @@
                     new { @class = "col-lg-2 control-label" })
                     <div class="col-lg-9">
                         @Html.TextBoxFor(model => model.Date,
-                        new { @class = "form-control datepicker" })
+                        new { @class = "" })
+                        @Html.ValidationMessageFor(model => model.Date)
                     </div>
                 </div>
                 <div class="form-group">

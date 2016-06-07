@@ -11,27 +11,29 @@ using EF.Data;
 using EF.Web.Models;
 using Microsoft.AspNet.Identity;
 using System.Threading.Tasks;
+using EF.Core;
+using EF.Web.SLocator;
 
 namespace EF.Web.Controllers
 {
     public class GoodsController : Controller
     {
-        private EFUnitOfWork unitOfWork;
-        private EFRepository<Goods> goodsRepository;
-        private UserManager<User, long> manager;
+        private IUnitOfWork unitOfWork;
+        private IRepository<Goods> goodsRepository;
+        private IUserManager manager;
+        private IBusinessLogic logic;
 
         public GoodsController(EFUnitOfWork tmpUnit)
         {
-            unitOfWork = tmpUnit;
+            unitOfWork = EFServiceLocator.GetService<IUnitOfWork>();
             goodsRepository = unitOfWork.Repository<Goods>();
-
-            var uStore = new CustomUserStore(tmpUnit.ContexGetter());
-            manager = new UserManager<User, long>(uStore);
+            manager = EFServiceLocator.GetService<IUserManager>();
+            logic = EFServiceLocator.GetService<IBusinessLogic>();
         }
 
         public ActionResult Index()
         {
-            return View(BL.Index<Goods>(this.goodsRepository));
+            return View(/*BL.Index<Goods>(this.goodsRepository)*/);
         }
 
         // GET: Goods/Details/5
@@ -42,7 +44,7 @@ namespace EF.Web.Controllers
 
                 if (id is long)
                 {
-                    return View(BL.Details<Goods>((long)id, this.goodsRepository));
+                    return View(/*BL.Details<Goods>((long)id, this.goodsRepository)*/);
                 }
 
                 else
@@ -63,7 +65,7 @@ namespace EF.Web.Controllers
             {
                 if (id is long)
                 {
-                    return View(BL.Details<Goods>((long)id, this.goodsRepository));
+                    return View(/*BL.Details<Goods>((long)id, this.goodsRepository)*/);
                 }
                 else
                 {
@@ -84,7 +86,7 @@ namespace EF.Web.Controllers
                 if (mdl is Goods)
                 {
                     var currentUser = await manager.FindByIdAsync(User.Identity.GetUserId<long>());
-                    return View(BL.CreateEditInPost<Goods>(mdl, this.goodsRepository, currentUser.Id));
+                    return View(/*BL.CreateEditInPost<Goods>(mdl, this.goodsRepository, currentUser.Id)*/);
                 }
 
                 else
@@ -105,7 +107,7 @@ namespace EF.Web.Controllers
             {
                 if (id is long)
                 {
-                    return View(BL.Details<Goods>((long)id, this.goodsRepository));
+                    return View(/*BL.Details<Goods>((long)id, this.goodsRepository)*/);
                 }
 
                 else
@@ -127,7 +129,7 @@ namespace EF.Web.Controllers
             {
                 if (id is long)
                 {
-                    BL.ConfirmDelete<Goods>((long)id, this.goodsRepository);
+                    //BL.ConfirmDelete<Goods>((long)id, this.goodsRepository);
                     return RedirectToAction("Index");
                 }
 

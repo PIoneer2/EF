@@ -14,7 +14,7 @@
            href="@Url.Action("CreateEditTransaction")" class="btn btn-success">
             <span class="glyphicon glyphicon-plus"></span>&nbsp; Transaction
         </a>
-        @Html.ActionLink("View all transactions", "IndexAll", "Transactions")
+        @Html.ActionLink("View all transactions", "IndexAll", "Transactions", new { @class = "btn btn-danger" })
 
         <table class="table" style="margin: 4px">
             <tr>

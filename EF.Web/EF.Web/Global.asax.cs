@@ -8,7 +8,7 @@ using System.Web.Routing;
 using EF.Web.Models;
 using Castle.Windsor;
 using System.Data.Entity;
-using EF.Data;
+using EF.Web.SLocator;
 
 namespace EF.Web
 {
@@ -28,12 +28,6 @@ namespace EF.Web
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
-
-            //инициализатор БД для ASPNetUser
-            //Database.SetInitializer<EFDbContext>(new ASPNetUsersStarter());
-
-            //инициализатор БД для MembershipReboot
-            //Database.SetInitializer(new MigrateDatabaseToLatestVersion<DefaultMembershipRebootDatabase, BrockAllen.MembershipReboot.Ef.Migrations.Configuration>());
         }
     }
 }

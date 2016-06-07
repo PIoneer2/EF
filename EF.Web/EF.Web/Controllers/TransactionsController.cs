@@ -4,43 +4,45 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using EF.Core.Data;
-using EF.Data;
 using EF.Core;
 using System.Runtime.CompilerServices;
 using EF.Web.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System.Threading.Tasks;
+using EF.Web.SLocator;
 
 namespace EF.Web.Controllers
 {
     [Authorize]
     public class TransactionsController : Controller
     {
-        private EFUnitOfWork unitOfWork;
-        private EFRepository<Transactions> transactionsRepository;
-        private UserManager<User, long> manager;
+        private IUnitOfWork unitOfWork;
+        private IRepository<Transactions> transactionsRepository;
+        private IUserManager manager;
+        private IBusinessLogic logic;
 
-        public TransactionsController(EFUnitOfWork tmpUnit, UserManager<EF.Core.Data.User, long> tmpUserManager)
+        public TransactionsController()
         {
-            unitOfWork = tmpUnit;
+            unitOfWork = EFServiceLocator.GetService<IUnitOfWork>();
             transactionsRepository = unitOfWork.Repository<Transactions>();
-            manager = tmpUserManager;
+            manager = EFServiceLocator.GetService<IUserManager>();
+            logic = EFServiceLocator.GetService<IBusinessLogic>();
         }
 
         // GET: Transactions
-        public ActionResult Index() //my transactions
+        public async Task<ActionResult> Index() //my transactions
         {
-            var currentUser = manager.FindById(User.Identity.GetUserId<long>());
-            //if (currentUser.Roles.Contains())
-            return View(BL.Index<Transactions>(this.transactionsRepository, currentUser.Id));
+            var currentUser = await manager.FindByIdAsync(User.Identity.GetUserId<long>()); //вызов FindByIdAsync начинает искать юзера с правильным ИД, а возвращает
+            //с неправильным ИД
+            return View(logic.Index<Transactions>(this.transactionsRepository, currentUser.Id));
         }
 
         //GET: Transactions
         [Authorize(Roles = "Admin")]
         public ActionResult IndexAll()    //all transactions
         {
-            return View(BL.Index<Transactions>(this.transactionsRepository));
+            return View(logic.Index<Transactions>(this.transactionsRepository, 0));
         }
 
         // GET: Transactions/Details/5
@@ -49,7 +51,7 @@ namespace EF.Web.Controllers
             long outLong;
             if (long.TryParse(id.ToString(), out outLong))
             {
-                return View(BL.Details<Transactions>(outLong, this.transactionsRepository));
+                return View(logic.Details<Transactions>(this.transactionsRepository, outLong));
             }
             else
             {
@@ -58,18 +60,21 @@ namespace EF.Web.Controllers
         }
 
         // GET: Transactions/CreateEditTransaction
-        public ActionResult CreateEditTransaction(object id)
+        public async Task<ActionResult> CreateEditTransaction(object id)
         {
             long outLong;
+            ViewBag.UserId = new SelectList(unitOfWork.Repository<User>().Table.ToList(), "Id", "UserName");
+            ViewBag.TranactionTypeId = new SelectList(unitOfWork.Repository<TranactionType>().Table.ToList(), "Id", "Name");
+            //редактирование
             if (long.TryParse(id.ToString(), out outLong))
-            { //редактирование
-                return View(BL.Details<Transactions>(outLong, this.transactionsRepository));
+            {
+                return View(logic.Details<Transactions>(this.transactionsRepository, outLong));
             }
+            //создание новой записи
             else
-            {//создание новой записи
-             //вставить стартовые данные в пустые данные
-                var currentUser = manager.FindById(User.Identity.GetUserId<long>());
-                return View(BL.CreateBlankModel<Transactions>(this.transactionsRepository, currentUser.Id));
+            {
+                var currentUser = await manager.FindByIdAsync(User.Identity.GetUserId<long>());
+                return View(logic.CreateBlankModel<Transactions>(this.transactionsRepository, currentUser.Id));
             }
         }
 
@@ -78,7 +83,7 @@ namespace EF.Web.Controllers
         {
             var currentUser = await manager.FindByIdAsync(User.Identity.GetUserId<long>());
             //mdl.UserId = currentUser.Id;
-            BL.CreateEditInPost<Transactions>(mdl, this.transactionsRepository, currentUser.Id);
+            logic.CreateEditInPost<Transactions>(mdl, this.transactionsRepository, currentUser.Id);
             //return View();
             return RedirectToAction("Index");
         }
@@ -89,7 +94,7 @@ namespace EF.Web.Controllers
             long outLong;
             if (long.TryParse(id.ToString(), out outLong))
             {
-                return View(BL.Details<Transactions>(outLong, this.transactionsRepository));
+                return View(logic.Details<Transactions>(this.transactionsRepository, outLong));
             }
 
             else
@@ -103,8 +108,8 @@ namespace EF.Web.Controllers
         public ActionResult ConfirmDelete(object id)//не работает после рефакторинга
         {
             long outLong;
-            if (long.TryParse(id.ToString(), out outLong)) { 
-            BL.ConfirmDelete<Transactions>(outLong, this.transactionsRepository);
+            if (long.TryParse(id.ToString(), out outLong)) {
+                logic.ConfirmDelete<Transactions>(this.transactionsRepository, outLong);
             return RedirectToAction("Index");
         } 
 
