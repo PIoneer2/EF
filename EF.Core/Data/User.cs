@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using EF.Core;
 using EF.Core.Data;
+using Newtonsoft.Json;
 
 namespace EF.Core.Data
 {
@@ -70,19 +71,23 @@ namespace EF.Core.Data
         public override string UserName { get; set; }
 
         public override long Id { get; set; }
-    
+
+        [JsonIgnore]
         public virtual ICollection<Transactions> Transactions { get; set; }
         //
         // Сводка:
         //     Navigation property for user roles
+        [JsonIgnore]
         public override ICollection<UserRole> Roles { get; }
         //
         // Сводка:
         //     Navigation property for user logins
+        [JsonIgnore]
         public override ICollection<UserLogin> Logins { get; }
         //
         // Сводка:
         //     Navigation property for user claims
+        [JsonIgnore]
         public override ICollection<UserClaim> Claims { get; }
 
 
@@ -92,6 +97,21 @@ namespace EF.Core.Data
             var userIdentity = await manager.CreateIdentityAsync(this, DefaultAuthenticationTypes.ApplicationCookie);
             // Add custom user claims here
             return userIdentity;
+        }
+
+        public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<User, long> manager, string AuthenticationType)
+        {
+            if (AuthenticationType == "Cookies")
+            { 
+                var userIdentity = await manager.CreateIdentityAsync(this, DefaultAuthenticationTypes.ApplicationCookie);
+                return userIdentity;
+            }
+            if (AuthenticationType == "Bearer")
+            {
+                var userIdentity = await manager.CreateIdentityAsync(this, DefaultAuthenticationTypes.ExternalBearer);
+                return userIdentity;
+            }
+            return null;
         }
     }
 }

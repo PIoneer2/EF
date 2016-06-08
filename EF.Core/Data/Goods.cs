@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,8 +23,11 @@ namespace EF.Core.Data
         public Int64 SizesId { get; set; }
         public string Info { get; set; }
 
+        [JsonIgnore]
         public virtual ICollection<GoodsInWarehauses> GoodsInWarehauses { get; set; }
+        [JsonIgnore]
         public virtual ICollection<RestrictionsSet> RestrictionsSet { get; set; }
+        [JsonIgnore]
         public virtual ICollection<GoodsInTransaction> GoodsInTransaction { get; set; }
         public virtual TypeOfStorage TypeOfStorage { get; set; }
         public virtual Sizes Sizes { get; set; }

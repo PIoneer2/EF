@@ -19,6 +19,14 @@ namespace EF.Web.SLocator
             {
                 return new EFDbContext() as T;
             }
+            if (typeof(T) == typeof(EFDbContext))
+            {
+                return new EFDbContext() as T;
+            }
+            if (typeof(T) == typeof(IDisposable))
+            {
+                return new EFDbContext() as T;
+            }
             if (typeof(T) == typeof(ICustomUserStore))
             {
                 return new CustomUserStore(EFServiceLocator.GetService<IDbContext>() as EFDbContext) as T;
@@ -43,6 +51,12 @@ namespace EF.Web.SLocator
             {
                 return new EFBusinessLogic() as T;
             }
+            /*
+            if (typeof(T) == typeof(ApplicationUserManager))
+            {
+                return ApplicationUserManager.Create;
+            }*/
+
             else
             {
                 throw new NotImplementedException();

@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EF.Data", "EF.Data\EF.Data\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EF.Web", "EF.Web\EF.Web\EF.Web.csproj", "{EB91FC61-11A0-4757-924C-38577430E5CC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EF.WebApi", "EF.WebApi\EF.WebApi.csproj", "{BE34F8AC-FB69-4ABA-BDE4-C9805C984BAE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,6 +31,10 @@ Global
 		{EB91FC61-11A0-4757-924C-38577430E5CC}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
 		{EB91FC61-11A0-4757-924C-38577430E5CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EB91FC61-11A0-4757-924C-38577430E5CC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BE34F8AC-FB69-4ABA-BDE4-C9805C984BAE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE34F8AC-FB69-4ABA-BDE4-C9805C984BAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE34F8AC-FB69-4ABA-BDE4-C9805C984BAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE34F8AC-FB69-4ABA-BDE4-C9805C984BAE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

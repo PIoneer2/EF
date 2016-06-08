@@ -1,16 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using EF.Core;
 using EF.Core.Data;
-using EF.Core;
-using System.Runtime.CompilerServices;
-using EF.Web.Models;
+using EF.Web.SLocator;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
-using EF.Web.SLocator;
+using System.Web;
+using System.Web.Mvc;
 
 namespace EF.Web.Controllers
 {

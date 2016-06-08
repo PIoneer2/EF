@@ -1,10 +1,10 @@
 ﻿using Microsoft.Owin;
 using Owin;
 
-[assembly: OwinStartupAttribute(typeof(EF.Web.Startup))]
+[assembly: OwinStartupAttribute("WebConfiguration", typeof(EF.Web.WebStartup))]
 namespace EF.Web
 {
-    public partial class Startup
+    public partial class WebStartup
     {
         public void Configuration(IAppBuilder app)
         {

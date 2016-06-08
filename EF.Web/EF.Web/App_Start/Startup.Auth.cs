@@ -8,18 +8,20 @@ using Owin;
 using EF.Web.Models;
 using EF.Core.Data;
 using EF.Data;
+using EF.Web.SLocator;
+using EF.Core;
 
 namespace EF.Web
 {
-    public partial class Startup
+    public partial class WebStartup
     {
         // For more information on configuring authentication, please visit http://go.microsoft.com/fwlink/?LinkId=301864
         public void ConfigureAuth(IAppBuilder app)
         {
             // Configure the db context, user manager and signin manager to use a single instance per request
-            app.CreatePerOwinContext(EFDbContext.Create);
-            app.CreatePerOwinContext<ApplicationUserManager>(ApplicationUserManager.Create);
-            app.CreatePerOwinContext<ApplicationSignInManager>(ApplicationSignInManager.Create);
+            app.CreatePerOwinContext(EFServiceLocator.GetService<IDisposable>);
+            app.CreatePerOwinContext<ApplicationUserManager>(ApplicationUserManager.Create);//ApplicationUserManager.Create
+            app.CreatePerOwinContext<ApplicationSignInManager>(ApplicationSignInManager.Create);//ApplicationSignInManager.Create
 
             // Enable the application to use a cookie to store information for the signed in user
             // and to use a cookie to temporarily store information about a user logging in with a third party login provider

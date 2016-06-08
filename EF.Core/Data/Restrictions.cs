@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,6 +17,7 @@ namespace EF.Core.Data
         public long Id { get; set; }
         public string RestrictionName { get; set; }
 
+        [JsonIgnore]
         public virtual ICollection<RestrictionsSet> RestrictionsSet { get; set; }
     }
 }

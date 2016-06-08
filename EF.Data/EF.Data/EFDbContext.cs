@@ -14,7 +14,7 @@ namespace EF.Data
         {
 
         }
-
+        
         public static EFDbContext Create()
         {
             return new EFDbContext();

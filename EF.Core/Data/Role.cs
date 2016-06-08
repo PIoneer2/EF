@@ -9,22 +9,12 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using EF.Core;
 using EF.Core.Data;
+using Newtonsoft.Json;
 
 namespace EF.Core.Data
 {
     public class Role : IdentityRole<long, UserRole>, IBaseEntity
     {
-        //
-        // Сводка:
-        //     Role id
-        public new long Id { get; set; }
-        //
-        // Сводка:
-        //     Role name
-        public new string Name { get; set; }
-
-        public virtual new ICollection<UserRole> Users { get; }
-
         public Role()
         {
             this.Users = new HashSet<UserRole>();
@@ -35,5 +25,16 @@ namespace EF.Core.Data
             Name = name;
             this.Users = new HashSet<UserRole>();
         }
+        //
+        // Сводка:
+        //     Role id
+        public new long Id { get; set; }
+        //
+        // Сводка:
+        //     Role name
+        public new string Name { get; set; }
+
+        [JsonIgnore]
+        public virtual new ICollection<UserRole> Users { get; }
     }
 }

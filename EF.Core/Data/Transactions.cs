@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity.EntityFramework;
+using Newtonsoft.Json;
 
 namespace EF.Core.Data
 {
@@ -20,6 +21,7 @@ namespace EF.Core.Data
         public DateTime Date { get; set; }
         public long Id { get; set; }
 
+        [JsonIgnore]
         public virtual ICollection<GoodsInTransaction> GoodsInTransaction { get; set; }
         public virtual TranactionType TranactionType { get; set; }
         public virtual User Users { get; set; }

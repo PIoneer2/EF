@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,6 +18,7 @@ namespace EF.Core.Data
         public string Adress { get; set; }
         public string Place { get; set; }
 
+        [JsonIgnore]
         public virtual ICollection<GoodsInWarehauses> GoodsInWarehauses { get; set; }
     }
 }
