@@ -1,27 +1,26 @@
-﻿using System.Threading.Tasks;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
+﻿using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
-using EF.WebApi.Models;
 using EF.Core;
 using EF.Core.Data;
+using System.Web;
 using EF.Web.SLocator;
 
 namespace EF.WebApi
 {
     // Configure the application user manager used in this application. UserManager is defined in ASP.NET Identity and is used by the application.
 
-    public class ApplicationUserManager : UserManager<EF.Core.Data.User, long>
+    public class ApplicationUserManager : EF.Web.ApplicationUserManager
     {
-        public ApplicationUserManager(ICustomUserStore store)
-            : base(store as IUserStore<EF.Core.Data.User, long>)
+        public ApplicationUserManager(CustomUserStore store)
+            : base(store)
         {
         }
 
         public static ApplicationUserManager Create(IdentityFactoryOptions<ApplicationUserManager> options, IOwinContext context)
         {
-            var manager = new ApplicationUserManager(EFServiceLocator.GetService<ICustomUserStore>());//new CustomUserStore(context.Get<EFDbContext>()));
+            //var manager = HttpContext.Current.GetOwinContext().GetUserManager<CustomUserManager>();
+            var manager = new ApplicationUserManager(EFServiceLocator.GetService<CustomUserStore>());//new CustomUserStore(context.Get<EFDbContext>()));
             // Configure validation logic for usernames
             manager.UserValidator = new UserValidator<EF.Core.Data.User, long>(manager)
             {

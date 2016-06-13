@@ -24,11 +24,16 @@ namespace EF.WebApi
             config.MapHttpAttributeRoutes();
 
             config.Routes.MapHttpRoute(
-                name: "DefaultApi",
-                routeTemplate: "api/{controller}/{id}",
-                defaults: new { id = RouteParameter.Optional }
+                name: "ActionApi",
+                routeTemplate: "api/{controller}/{action}"
             );
 
+            config.Routes.MapHttpRoute(
+                name: "DefaultApi",
+                routeTemplate: "api/{controller}/{id}",
+                defaults: new { action = "DefaultAction", id = RouteParameter.Optional }
+            );
+            
             //global OData enabling
             //config.EnableQuerySupport();
             System.Web.OData.Extensions.HttpConfigurationExtensions.AddODataQueryFilter(config);

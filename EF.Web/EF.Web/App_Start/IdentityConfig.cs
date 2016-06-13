@@ -37,25 +37,24 @@ namespace EF.Web
     }
 
     // Configure the application user manager used in this application. UserManager is defined in ASP.NET Identity and is used by the application.
-    public class ApplicationUserManager : UserManager<EF.Core.Data.User, long>
+    public class ApplicationUserManager : CustomUserManager //UserManager<EF.Core.Data.User, long>
     {
         //public ApplicationUserManager(IUserStore<EF.Core.Data.User, long> store)
-        public ApplicationUserManager(ICustomUserStore store)//CustomUserStore store
-            : base(store as IUserStore<EF.Core.Data.User, long>)
+        public ApplicationUserManager(CustomUserStore store)//CustomUserStore store
+            : base(store)
         {
         }
 
 
         public static ApplicationUserManager Create(IdentityFactoryOptions<ApplicationUserManager> options, IOwinContext context) 
         {
-            var manager = new ApplicationUserManager(EFServiceLocator.GetService<ICustomUserStore>());//new CustomUserStore(context.Get<EFDbContext>())
+            var manager = new ApplicationUserManager(EFServiceLocator.GetService<CustomUserStore>());//new CustomUserStore(context.Get<EFDbContext>())
             // Configure validation logic for usernames
             manager.UserValidator = new UserValidator<EF.Core.Data.User, long>(manager)
             {
                 AllowOnlyAlphanumericUserNames = false,
                 RequireUniqueEmail = true
             };
-
             // Configure validation logic for passwords
             manager.PasswordValidator = new PasswordValidator
             {

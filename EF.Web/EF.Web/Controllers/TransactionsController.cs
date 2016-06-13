@@ -88,7 +88,7 @@ namespace EF.Web.Controllers
         }
 
         // GET: Transactions/Delete/5
-        public ActionResult Delete(object id)//не работает после рефакторинга
+        public ActionResult Delete(object id)
         {
             long outLong;
             if (long.TryParse(id.ToString(), out outLong))
@@ -104,18 +104,18 @@ namespace EF.Web.Controllers
 
         // POST: Transactions/Delete/5
         [HttpPost, ActionName("Delete")]
-        public ActionResult ConfirmDelete(object id)//не работает после рефакторинга
+        public ActionResult ConfirmDelete(object id)
         {
             long outLong;
-            if (long.TryParse(id.ToString(), out outLong)) {
+            if (long.TryParse(id.ToString(), out outLong))
+            {
                 logic.ConfirmDelete<Transactions>(this.transactionsRepository, outLong);
-            return RedirectToAction("Index");
-        } 
-
-                else
-                {
-                    return RedirectToAction("Index");
-                }
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                return RedirectToAction("Index");
+            }
         }
         protected override void Dispose(bool disposing)
         {

@@ -23,6 +23,10 @@ namespace EF.Web.SLocator
             {
                 return new EFDbContext() as T;
             }
+            if (typeof(T) == typeof(DbContext))
+            {
+                return new EFDbContext() as T;
+            }
             if (typeof(T) == typeof(IDisposable))
             {
                 return new EFDbContext() as T;
@@ -31,11 +35,19 @@ namespace EF.Web.SLocator
             {
                 return new CustomUserStore(EFServiceLocator.GetService<IDbContext>() as EFDbContext) as T;
             }
+            if (typeof(T) == typeof(CustomUserStore))
+            {
+                return new CustomUserStore(EFServiceLocator.GetService<IDbContext>() as EFDbContext) as T;
+            }
             if (typeof(T) == typeof(ICustomRoleStore))
             {
                 return new CustomRoleStore(EFServiceLocator.GetService<IDbContext>() as EFDbContext) as T;
             }
             if (typeof(T) == typeof(IUserManager))
+            {
+                return new CustomUserManager(EFServiceLocator.GetService<ICustomUserStore>() as CustomUserStore) as T;
+            }
+            if (typeof(T) == typeof(CustomUserManager))
             {
                 return new CustomUserManager(EFServiceLocator.GetService<ICustomUserStore>() as CustomUserStore) as T;
             }

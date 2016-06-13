@@ -61,9 +61,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CustomRoleStore.cs" />
-    <Compile Include="CustomUserManager.cs" />
-    <Compile Include="CustomUserStore.cs" />
     <Compile Include="EFDbContext.cs" />
     <Compile Include="Mapping\UsersMap.cs" />
     <Compile Include="Mapping\GoodsInTransactionMap.cs" />

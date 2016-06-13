@@ -6,9 +6,7 @@ using System.Security.Cryptography;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
-using System.Web.Http.ModelBinding;
 using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
@@ -17,6 +15,9 @@ using EF.WebApi.Models;
 using EF.WebApi.Providers;
 using EF.WebApi.Results;
 using EF.Core.Data;
+using EF.Web.SLocator;
+using EF.Core;
+using System.Data.Entity;
 
 namespace EF.WebApi.Controllers
 {
@@ -25,10 +26,12 @@ namespace EF.WebApi.Controllers
     public class AccountController : ApiController
     {
         private const string LocalLoginProvider = "Local";
-        private ApplicationUserManager _userManager;
+        private EF.Web.ApplicationUserManager _userManager;
 
         public AccountController()
         {
+            UserManager = new EF.Web.ApplicationUserManager(new CustomUserStore(EFServiceLocator.GetService<DbContext>()));
+            //UserManager = new CustomUserManager(new CustomUserStore(EFServiceLocator.GetService<DbContext>())) as ApplicationUserManager;
         }
 
         public AccountController(ApplicationUserManager userManager,
@@ -38,11 +41,11 @@ namespace EF.WebApi.Controllers
             AccessTokenFormat = accessTokenFormat;
         }
 
-        public ApplicationUserManager UserManager
+        public EF.Web.ApplicationUserManager UserManager
         {
             get
             {
-                return _userManager ?? Request.GetOwinContext().GetUserManager<ApplicationUserManager>();
+                return _userManager ?? Request.GetOwinContext().GetUserManager<EF.Web.ApplicationUserManager>();
             }
             private set
             {
@@ -329,7 +332,7 @@ namespace EF.WebApi.Controllers
                 return BadRequest(ModelState);
             }
 
-            var user = new User() { UserName = model.Email, Email = model.Email };
+            var user = new EF.Core.Data.User() { UserName = model.Email, Email = model.Email };
 
             IdentityResult result = await UserManager.CreateAsync(user, model.Password);
 

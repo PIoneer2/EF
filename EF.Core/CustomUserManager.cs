@@ -7,7 +7,7 @@ using EF.Core;
 using Microsoft.AspNet.Identity;
 using EF.Core.Data;
 
-namespace EF.Data
+namespace EF.Core
 {
     public class CustomUserManager : UserManager<User, long>, IUserManager
     {

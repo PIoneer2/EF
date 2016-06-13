@@ -26,6 +26,7 @@ namespace EF.Core.Data
         //
         // Сводка:
         //     Used to record failures for the purposes of lockout
+        [JsonIgnore]
         public override int AccessFailedCount { get; set; }
         //
         // Сводка:
@@ -34,36 +35,44 @@ namespace EF.Core.Data
         //
         // Сводка:
         //     True if the email is confirmed, default is false
+        [JsonIgnore]
         public override bool EmailConfirmed { get; set; }
         //
         // Сводка:
         //     Is lockout enabled for this user
+        [JsonIgnore]
         public override bool LockoutEnabled { get; set; }
         //
         // Сводка:
         //     DateTime in UTC when lockout ends, any time in the past is considered not locked
         //     out.
+        [JsonIgnore]
         public override DateTime? LockoutEndDateUtc { get; set; }
         //
         // Сводка:
         //     The salted/hashed form of the user password
+        [JsonIgnore]
         public override string PasswordHash { get; set; }
         //
         // Сводка:
         //     PhoneNumber for the user
+        [JsonIgnore]
         public override string PhoneNumber { get; set; }
         //
         // Сводка:
         //     True if the phone number is confirmed, default is false
+        [JsonIgnore]
         public override bool PhoneNumberConfirmed { get; set; }
         //
         // Сводка:
         //     A random value that should change whenever a users credentials have changed (password
         //     changed, login removed)
+        [JsonIgnore]
         public override string SecurityStamp { get; set; }
         //
         // Сводка:
         //     Is two factor enabled for the user
+        [JsonIgnore]
         public override bool TwoFactorEnabled { get; set; }
         //
         // Сводка:

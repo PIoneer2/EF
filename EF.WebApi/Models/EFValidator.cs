@@ -14,13 +14,13 @@ namespace EF.WebApi.Models
 {
     public static class EFValidator
     {
-        public static object deserializeFromJSON<T>(string json) where T: class
+        public static T deserializeFromJSON<T>(string json) where T: class
         {
             try
             {
                 //var serializer = new JavaScriptSerializer();
                 //var result = serializer.Deserialize<Dictionary<string, object>>(json);
-                var result = JsonConvert.DeserializeObject<T>(json);
+                T result = JsonConvert.DeserializeObject<T>(json);
                 return result;
             }
             catch
