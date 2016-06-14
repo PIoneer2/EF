@@ -10,6 +10,8 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using EF.Core;
 using EF.Core.Data;
 using Newtonsoft.Json;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 
 namespace EF.Core.Data
 {
@@ -28,13 +30,21 @@ namespace EF.Core.Data
         //
         // Сводка:
         //     Role id
-        public new long Id { get; set; }
+        //public override long Id { get; set; }
         //
         // Сводка:
         //     Role name
-        public new string Name { get; set; }
+        //public new string Name { get; set; }
 
         [JsonIgnore]
         public virtual new ICollection<UserRole> Users { get; }
+    }
+
+    [NotMapped]
+    public class RoleDTO : BaseEntity
+    {
+        [Required]
+        [Display(Name = "Role Name")]
+        public string Name { get; set; }
     }
 }

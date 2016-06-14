@@ -51,8 +51,8 @@ namespace EF.Core
         IEnumerable<T> Index<T>(IRepository<T> parametricRepository, long id) where T : class, IBaseEntity;
         T Details<T>(IRepository<T> parametricRepository, long id) where T : class, IBaseEntity;
         T CreateBlankModel<T>(IRepository<T> parametricRepository, long id) where T : class, IBaseEntity;
-        T CreateEditInPost<T>(T mdl, IRepository<T> parametricRepository, long id) where T : class, IBaseEntity;
+        T EditInPost<T>(T mdl, IRepository<T> parametricRepository) where T : class, IBaseEntity;
         void ConfirmDelete<T>(IRepository<T> parametricRepository, long id) where T : class, IBaseEntity;
-        void Transform(IBaseEntity toObject, BaseEntity fromObject, bool copyId = false);
+        void FromDTOtoBaseClass(BaseEntity fromObject, IBaseEntity toObject, bool copyId = false);
     }
 }

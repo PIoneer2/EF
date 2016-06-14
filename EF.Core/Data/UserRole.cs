@@ -9,6 +9,8 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using EF.Core;
 using EF.Core.Data;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 
 namespace EF.Core.Data
 {
@@ -28,5 +30,17 @@ namespace EF.Core.Data
         {
 
         }
+    }
+
+    [NotMapped]
+    public class UserRoleDTO : BaseEntity
+    {
+        [Required]
+        [Display(Name = "Role Id")]
+        public long RoleId { get; set; }
+
+        [Required]
+        [Display(Name = "User Id")]
+        public long UserId { get; set; }
     }
 }

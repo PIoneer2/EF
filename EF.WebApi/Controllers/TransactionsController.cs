@@ -72,14 +72,15 @@ namespace EF.WebApi.Controllers
 
         // POST: api/Transactions
         [System.Web.Http.HttpPost]
-        public async Task<IHttpActionResult> PostTransaction([FromBody]TransactionDTO transaction)
+        [Authorize(Roles = "Admin,Manager")]
+        public async Task<IHttpActionResult> Post([FromBody]TransactionDTO transaction)
         {
             try
             {
                 var currentUser = await manager.FindByIdAsync(User.Identity.GetUserId<long>());
                 Transactions blankTransaction = logic.CreateBlankModel(transactionsRepository, currentUser.Id);
-                logic.Transform(blankTransaction, transaction, false);
-                logic.CreateEditInPost(blankTransaction, transactionsRepository, currentUser.Id);
+                logic.FromDTOtoBaseClass(transaction, blankTransaction, false);
+                logic.EditInPost(blankTransaction, transactionsRepository);
                 return Ok();
             }
             catch
@@ -90,14 +91,15 @@ namespace EF.WebApi.Controllers
 
         // PUT: api/Transactions/5
         [System.Web.Http.HttpPut]
+        [Authorize(Roles = "Admin,Manager")]
         public async Task<IHttpActionResult> Put([FromBody]TransactionDTO transaction)
         {
             try
             {
                 var currentUser = await manager.FindByIdAsync(User.Identity.GetUserId<long>());
-                Transactions typicalTransaction = new Transactions();
-                logic.Transform(typicalTransaction, transaction, true);
-                logic.CreateEditInPost(typicalTransaction, transactionsRepository, currentUser.Id);
+                Transactions typicalTransaction = EFServiceLocator.GetService<Transactions>();
+                logic.FromDTOtoBaseClass(transaction, typicalTransaction, true);
+                logic.EditInPost(typicalTransaction, transactionsRepository);
                 return Ok();
             }
             catch
@@ -108,6 +110,7 @@ namespace EF.WebApi.Controllers
 
         // DELETE: api/Transactions/5
         [System.Web.Http.HttpDelete]
+        [Authorize(Roles = "Admin,Manager")]
         public IHttpActionResult Delete(long id)
         {
             try

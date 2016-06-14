@@ -63,12 +63,64 @@ namespace EF.Web.SLocator
             {
                 return new EFBusinessLogic() as T;
             }
-            /*
-            if (typeof(T) == typeof(ApplicationUserManager))
+            if (typeof(T) == typeof(Transactions))
             {
-                return ApplicationUserManager.Create;
-            }*/
-
+                return new Transactions() as T;
+            }
+            if (typeof(T) == typeof(Goods))
+            {
+                return new Goods() as T;
+            }
+            if (typeof(T) == typeof(GoodsInTransaction))
+            {
+                return new GoodsInTransaction() as T;
+            }
+            if (typeof(T) == typeof(GoodsInWarehauses))
+            {
+                return new GoodsInWarehauses() as T;
+            }
+            if (typeof(T) == typeof(Restrictions))
+            {
+                return new Restrictions() as T;
+            }
+            if (typeof(T) == typeof(RestrictionsSet))
+            {
+                return new RestrictionsSet() as T;
+            }
+            if (typeof(T) == typeof(Role))
+            {
+                return new Role() as T;
+            }
+            if (typeof(T) == typeof(Sizes))
+            {
+                return new Sizes() as T;
+            }
+            if (typeof(T) == typeof(TranactionType))
+            {
+                return new TranactionType() as T;
+            }
+            if (typeof(T) == typeof(TypeOfStorage))
+            {
+                return new TypeOfStorage() as T;
+            }
+            if (typeof(T) == typeof(User))
+            {
+                return new User() as T;
+            }
+            if (typeof(T) == typeof(UserRole))
+            {
+                return new Sizes() as T;
+            }
+            if (typeof(T) == typeof(WarehousesPlaces))
+            {
+                return new WarehousesPlaces() as T;
+            }
+            /*
+             if (typeof(T) == typeof())
+            {
+                return new () as T;
+            }
+             */
             else
             {
                 throw new NotImplementedException();

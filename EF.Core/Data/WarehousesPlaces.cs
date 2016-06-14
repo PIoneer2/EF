@@ -1,13 +1,15 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace EF.Core.Data
 {
-    public partial class WarehousesPlaces : IBaseEntity
+    public class WarehousesPlaces : IBaseEntity
     {
         public WarehousesPlaces()
         {
@@ -20,5 +22,17 @@ namespace EF.Core.Data
 
         [JsonIgnore]
         public virtual ICollection<GoodsInWarehauses> GoodsInWarehauses { get; set; }
+    }
+
+    [NotMapped]
+    public class WarehousesPlacesDTO : BaseEntity
+    {
+        [Required]
+        [Display(Name = "Adress")]
+        public string Adress { get; set; }
+
+        [Required]
+        [Display(Name = "Place number/code")]
+        public string Place { get; set; }
     }
 }

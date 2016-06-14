@@ -10,6 +10,8 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using EF.Core;
 using EF.Core.Data;
 using Newtonsoft.Json;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 
 namespace EF.Core.Data
 {
@@ -122,5 +124,71 @@ namespace EF.Core.Data
             }
             return null;
         }
+    }
+
+    [NotMapped]
+    public class UserDTO : BaseEntity
+    {
+        [Required]
+        [Display(Name = "Counter of failed accesses")]
+        public int AccessFailedCount { get; set; }
+        //
+        // Сводка:
+        //     Email
+        [Required]
+        [Display(Name = "Email")]
+        public string Email { get; set; }
+        //
+        // Сводка:
+        //     True if the email is confirmed, default is false
+        [Required]
+        [Display(Name = "Email is Confirmed")]
+        public bool EmailConfirmed { get; set; }
+        //
+        // Сводка:
+        //     Is lockout enabled for this user
+        [Required]
+        [Display(Name = "Lockout is Enabled")]
+        public bool LockoutEnabled { get; set; }
+        //
+        // Сводка:
+        //     DateTime in UTC when lockout ends, any time in the past is considered not locked
+        //     out.
+        [Display(Name = "Lockout End Date Utc")]
+        public DateTime? LockoutEndDateUtc { get; set; }
+        //
+        // Сводка:
+        //     The salted/hashed form of the user password
+        [Display(Name = "Password Hash")]
+        public string PasswordHash { get; set; }
+        //
+        // Сводка:
+        //     PhoneNumber for the user
+        [Display(Name = "Phone Number")]
+        public string PhoneNumber { get; set; }
+        //
+        // Сводка:
+        //     True if the phone number is confirmed, default is false
+        [Required]
+        [Display(Name = "Phone Number is Confirmed")]
+        public bool PhoneNumberConfirmed { get; set; }
+        //
+        // Сводка:
+        //     A random value that should change whenever a users credentials have changed (password
+        //     changed, login removed)
+        [Display(Name = "Security Stamp")]
+        public string SecurityStamp { get; set; }
+        //
+        // Сводка:
+        //     Is two factor enabled for the user
+        [Required]
+        [Display(Name = "Two Factor ligin is Enabled")]
+        public bool TwoFactorEnabled { get; set; }
+        //
+        // Сводка:
+        //     User name
+        [Required]
+        [Display(Name = "User Name")]
+        public string UserName { get; set; }
     }
 }

@@ -82,7 +82,7 @@ namespace EF.Web.Controllers
         {
             var currentUser = await manager.FindByIdAsync(User.Identity.GetUserId<long>());
             //mdl.UserId = currentUser.Id;
-            logic.CreateEditInPost<Transactions>(mdl, this.transactionsRepository, currentUser.Id);
+            logic.EditInPost<Transactions>(mdl, this.transactionsRepository);
             //return View();
             return RedirectToAction("Index");
         }
