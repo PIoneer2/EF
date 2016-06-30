@@ -1,0 +1,20 @@
+[
+    {
+        "TranactionType": {
+            "Id": 1,
+            "Name": "Supply"
+        },
+        "Users": {
+            "Email": "1@2.com",
+            "UserName": "1@2.com",
+            "Id": 1
+        },
+        "GoodsInTransaction": [
+        ],
+        "Id": 10025,
+        "Description": "",
+        "TranactionTypeId": 1,
+        "UserId": 1,
+        "Date": "2016-06-06T19:37:30"
+    }
+]

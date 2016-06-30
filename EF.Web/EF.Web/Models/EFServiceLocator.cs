@@ -12,7 +12,7 @@ using EF.Web.BusinessLogic;
 namespace EF.Web.SLocator
 {
     public static class EFServiceLocator
-    {
+    { 
         public static T GetService<T>() where T : class
         {
             if (typeof(T) == typeof(IDbContext))
@@ -114,6 +114,14 @@ namespace EF.Web.SLocator
             if (typeof(T) == typeof(WarehousesPlaces))
             {
                 return new WarehousesPlaces() as T;
+            }
+            if (typeof(T) == typeof(TransactionDTO))
+            {
+                return new TransactionDTO() as T;
+            }
+            if (typeof(T) == typeof(List<TransactionDTO>))
+            {
+                return new List<TransactionDTO>() as T;
             }
             /*
              if (typeof(T) == typeof())

@@ -28,13 +28,12 @@ namespace EF.WebApi.Controllers
         }
 
         // GET: api/WarehousesPlaces
-        [ActionName("DefaultAction")]
-        public async Task<IQueryable<WarehousesPlaces>> Get()//my
+        public IQueryable<WarehousesPlaces> Get()//my
         {
             try
             {
-                var currentUser = await manager.FindByIdAsync(User.Identity.GetUserId<long>());
-                return logic.Index(warehousesPlacesRepository, currentUser.Id).AsQueryable();
+                //var currentUser = await manager.FindByIdAsync(User.Identity.GetUserId<long>());
+                return logic.Index(warehousesPlacesRepository, 0).AsQueryable();
             }
             catch
             {
@@ -45,6 +44,7 @@ namespace EF.WebApi.Controllers
         // GET: api/WarehousesPlaces/All
         [System.Web.Http.Authorize(Roles = "Admin")]
         [System.Web.Http.HttpGet]
+        [Route("take/All")]
         public IQueryable<WarehousesPlaces> All()    //all
         {
             try
@@ -92,11 +92,11 @@ namespace EF.WebApi.Controllers
         // PUT: api/WarehousesPlaces/5
         [System.Web.Http.HttpPut]
         [Authorize(Roles = "Admin,Manager")]
-        public async Task<IHttpActionResult> Put([FromBody]WarehousesPlacesDTO warehousesPlaces)
+        public IHttpActionResult Put([FromBody]WarehousesPlacesDTO warehousesPlaces)
         {
             try
             {
-                var currentUser = await manager.FindByIdAsync(User.Identity.GetUserId<long>());
+                //var currentUser = await manager.FindByIdAsync(User.Identity.GetUserId<long>());
                 WarehousesPlaces typicalWarehousesPlaces = EFServiceLocator.GetService<WarehousesPlaces>();
                 logic.FromDTOtoBaseClass(warehousesPlaces, typicalWarehousesPlaces, true);
                 logic.EditInPost(typicalWarehousesPlaces, warehousesPlacesRepository);

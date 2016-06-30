@@ -28,13 +28,12 @@ namespace EF.WebApi.Controllers
         }
 
         // GET: api/Sizes
-        [ActionName("DefaultAction")]
-        public async Task<IQueryable<Sizes>> Get()//my
+        public IQueryable<Sizes> Get()//my
         {
             try
             {
-                var currentUser = await manager.FindByIdAsync(User.Identity.GetUserId<long>());
-                return logic.Index(sizesRepository, currentUser.Id).AsQueryable();
+                //var currentUser = await manager.FindByIdAsync(User.Identity.GetUserId<long>());
+                return logic.Index(sizesRepository, 0).AsQueryable();
             }
             catch
             {
@@ -45,6 +44,7 @@ namespace EF.WebApi.Controllers
         // GET: api/Sizes/All
         [System.Web.Http.Authorize(Roles = "Admin")]
         [System.Web.Http.HttpGet]
+        [Route("take/All")]
         public IQueryable<Sizes> All()    //all
         {
             try
@@ -92,11 +92,11 @@ namespace EF.WebApi.Controllers
         // PUT: api/Sizes/5
         [System.Web.Http.HttpPut]
         [Authorize(Roles = "Admin,Manager")]
-        public async Task<IHttpActionResult> Put([FromBody]SizesDTO sizes)
+        public IHttpActionResult Put([FromBody]SizesDTO sizes)
         {
             try
             {
-                var currentUser = await manager.FindByIdAsync(User.Identity.GetUserId<long>());
+                //var currentUser = await manager.FindByIdAsync(User.Identity.GetUserId<long>());
                 Sizes typicalSizes = EFServiceLocator.GetService<Sizes>();
                 logic.FromDTOtoBaseClass(sizes, typicalSizes, true);
                 logic.EditInPost(typicalSizes, sizesRepository);

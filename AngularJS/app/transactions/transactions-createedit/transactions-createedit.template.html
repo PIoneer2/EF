@@ -1,0 +1,88 @@
+<div class="container-fluid">
+  <!--Body content-->
+  <div class="book-example panel panel-primary">
+    <div class="panel-heading panel-head">Edit Transaction</div>
+    <div class="panel-body">
+        <form name="editForm" novalidate ng-submit="submit()">
+            <div class="form-horizontal">
+                <input class = "form-control" type="hidden" name="Id" value="{{$ctrl.transaction.Id}}">
+
+                <div class="form-group">
+                    <label class = "col-lg-2 control-label">Description</label>
+                    <div class="col-lg-9">
+                        <input class = "form-control" type="text" ng-model="$ctrl.transaction.Description" placeholder="Description for transaction (optional)" name="descriptionText" ng-maxlength="$ctrl.maxLenghtDescription"
+                        />
+                        <span class="error-message" ng-show="editForm.descriptionText.$invalid">
+                        Entered string is to long! Max is - {{$ctrl.maxLenghtDescription}} symbols.
+                        </span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class = "col-lg-2 control-label">User</label>
+                    <div class="col-lg-9">
+                        <select ng-model="$ctrl.selectedUser" required ng-options="user as user.UserName for user in $ctrl.UserId track by user.Id" >
+                            <!--
+                            user.Id
+<select ng-model="$ctrl.selectedUser" ng-options="user.Id as user.UserName for user in $ctrl.UserId"> works
+                            <option ng-repeat="user in $ctrl.UserId" value={{user.Id}}>{{user.UserName}}</option>
+                                <option value="">-- please choose the User --</option>
+                        <option>{{$ctrl.userToSelect}}</option>
+
+                            -->
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class = "col-lg-2 control-label">Transaction Type</label>
+                    <div class="col-lg-9">
+                        <select ng-model="$ctrl.selectedTransType" required ng-options="TranactionType as TranactionType.Name for TranactionType in $ctrl.TranactionTypeId track by TranactionType.Id">
+                        
+                            <!--
+<option value="">-- please choose the type of transaction --</option>
+                            <option ng-repeat="TranactionType in $ctrl.TranactionTypeId" value={{TranactionType.Id}}>{{TranactionType.Name}}</option>-->
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class = "col-lg-2 control-label">Date</label>
+                    <div class="col-lg-9">
+                        <input type="text" 
+                        required 
+                        placeholder="2016-12-28 23:59:59" 
+                        ng-model=$ctrl.transaction.Date 
+                        class = "form-control" 
+                        name='Date' 
+                        ng-pattern="$ctrl.dateTimePattern"
+                        >
+                        
+                        <span class="error-message" ng-show="editForm.Date.$error.required">
+                        Date and time are not set. Please, enter the values.
+                        </span>
+                        <span class="error-message" ng-show="editForm.Date.$invalid">
+                        Wrong date and time format. Example: 2010-10-29 06:40:23.
+                        </span>
+                    </div>
+                </div>
+                <span class="error-message" ng-show="$ctrl.showServerMessage"> {{$ctrl.serverMessage}}
+                    <ul>
+                        <li class="has-error" ng-repeat="error in $ctrl.modelErrors"> {{error}} </li> 
+                    </ul>
+                    <img src="/resourses/loader.gif">
+                </span>
+
+                <div class="form-group">
+                    <div class="col-lg-8"></div>
+                    <div class="col-lg-3">
+                        <a class = "btn btn-default" title="Back to List" href="#!/transactions">Index</a>
+                        <input type="submit" class="btn btn-success"
+                        value="Submit" ng-click="$ctrl.sendToServer()" ng-disabled="editForm.$invalid || $ctrl.showServerMessage" />
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+</div>

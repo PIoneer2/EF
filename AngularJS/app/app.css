@@ -1,0 +1,21 @@
+body {
+	padding-top: 20px;
+}
+
+.table {
+
+	margin: 4px
+}
+
+input.ng-invalid.ng-dirty {
+	border: 2px ridge red;
+}
+
+.ng-dirty.ng-invalid-same-as ~ .error-msg.invalid-same-as {
+  display: block;
+}
+
+.has-error {
+    color: red;
+    background-color: yellow;
+}

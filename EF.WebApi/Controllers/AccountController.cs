@@ -18,9 +18,11 @@ using EF.Core.Data;
 using EF.Web.SLocator;
 using EF.Core;
 using System.Data.Entity;
+using System.Web.Http.Cors;
 
 namespace EF.WebApi.Controllers
 {
+    
     [Authorize]
     [RoutePrefix("api/Account")]
     public class AccountController : ApiController
@@ -51,6 +53,14 @@ namespace EF.WebApi.Controllers
             {
                 _userManager = value;
             }
+        }
+
+        [AllowAnonymous]
+        [System.Web.Http.ActionName("Options")]
+        [System.Web.Http.HttpOptions]
+        public HttpResponseMessage Options()
+        {
+            return new HttpResponseMessage { StatusCode = System.Net.HttpStatusCode.OK };
         }
 
         public ISecureDataFormat<AuthenticationTicket> AccessTokenFormat { get; private set; }
@@ -325,6 +335,9 @@ namespace EF.WebApi.Controllers
         // POST api/Account/Register
         [AllowAnonymous]
         [Route("Register")]
+        [System.Web.Http.HttpPost]
+        //[System.Web.Http.ActionName("DefaultAction")]
+        //[EnableCors(origins: "http://localhost:8000", headers: "*", methods: "*")]
         public async Task<IHttpActionResult> Register(RegisterBindingModel model)
         {
             if (!ModelState.IsValid)

@@ -23,6 +23,10 @@ namespace EF.WebApi
         // For more information on configuring authentication, please visit http://go.microsoft.com/fwlink/?LinkId=301864
         public void ConfigureAuth(IAppBuilder app)
         {
+
+            //If your still having problems with CORS:
+            //app.UseCors(Microsoft.Owin.Cors.CorsOptions.AllowAll);
+
             // Configure the db context and user manager to use a single instance per request
             app.CreatePerOwinContext(EFServiceLocator.GetService<IDisposable>);
             app.CreatePerOwinContext<EF.Web.ApplicationUserManager>(EF.Web.ApplicationUserManager.Create);

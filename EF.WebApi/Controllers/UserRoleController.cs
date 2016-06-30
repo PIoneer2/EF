@@ -28,13 +28,12 @@ namespace EF.WebApi.Controllers
         }
 
         // GET: api/UserRole
-        [ActionName("DefaultAction")]
-        public async Task<IQueryable<UserRole>> Get()//my
+        public IQueryable<UserRole> Get()//my
         {
             try
             {
-                var currentUser = await manager.FindByIdAsync(User.Identity.GetUserId<long>());
-                return logic.Index(userRoleRepository, currentUser.Id).AsQueryable();
+                //var currentUser = await manager.FindByIdAsync(User.Identity.GetUserId<long>());
+                return logic.Index(userRoleRepository, 0).AsQueryable();
             }
             catch
             {
@@ -75,11 +74,11 @@ namespace EF.WebApi.Controllers
 
         // PUT: api/UserRole/5
         [System.Web.Http.HttpPut]
-        public async Task<IHttpActionResult> Put([FromBody]UserRoleDTO userRole)
+        public IHttpActionResult Put([FromBody]UserRoleDTO userRole)
         {
             try
             {
-                var currentUser = await manager.FindByIdAsync(User.Identity.GetUserId<long>());
+                //var currentUser = await manager.FindByIdAsync(User.Identity.GetUserId<long>());
                 UserRole typicalUserRole = EFServiceLocator.GetService<UserRole>();
                 logic.FromDTOtoBaseClass(userRole, typicalUserRole, true);
                 logic.EditInPost(typicalUserRole, userRoleRepository);

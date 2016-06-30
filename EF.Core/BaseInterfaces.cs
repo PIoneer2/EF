@@ -53,6 +53,7 @@ namespace EF.Core
         T CreateBlankModel<T>(IRepository<T> parametricRepository, long id) where T : class, IBaseEntity;
         T EditInPost<T>(T mdl, IRepository<T> parametricRepository) where T : class, IBaseEntity;
         void ConfirmDelete<T>(IRepository<T> parametricRepository, long id) where T : class, IBaseEntity;
+        TransactionDTO FromBaseToDTOTransaction(Transactions fromObject);
         void FromDTOtoBaseClass(BaseEntity fromObject, IBaseEntity toObject, bool copyId = false);
     }
 }

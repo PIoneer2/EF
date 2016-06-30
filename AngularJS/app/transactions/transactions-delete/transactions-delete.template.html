@@ -1,0 +1,52 @@
+<div class="container-fluid">
+  <!--Body content-->
+  <h2>Delete</h2>
+
+  <div class="book-example panel panel-primary">
+    <div class="panel-heading panel-head">Delete transaction</div>
+    <div class="panel-body">
+        <h3>Are you sure you want to delete this?</h3>
+        <h1></h1><!--ErrorMessage-->
+        <div class="form-horizontal">
+            <div class="form-group">
+                <label class = "col-lg-1 control-label">Description</label>
+                <div class="col-lg-9">
+                    <label class = "form-control">{{$ctrl.transaction.Description}}</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class = "col-lg-1 control-label">User</label>
+                <div class="col-lg-9">
+                    <label class = "form-control">{{$ctrl.transaction.Users.UserName}}</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class = "col-lg-1 control-label">Tranaction Type</label>
+                <div class="col-lg-9">
+                    <label class = "form-control">{{$ctrl.transaction.TranactionType.Name}}</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class = "col-lg-1 control-label">Date</label>
+                <div class="col-lg-9">
+                    <label class = "form-control">{{$ctrl.transaction.Date | date : 'yyyy.MM.dd hh:mm:ss'}}</label>
+                </div>
+            </div>
+
+            <form name="deleteForm" ng-submit="$ctrl.toDelete()" >
+            <div class="form-group">
+                <div class="col-lg-1"></div>
+                <div class="col-lg-9" >
+                    <input type="submit" value="Delete"   
+                    class="btn btn-danger" ng-disabled="$ctrl.showServerMessage"/>
+                    <a class = "btn btn-success" title="Back to List" ng-disabled="$ctrl.showServerMessage" href="#!/transactions">Index</a>
+                </div>
+            </div>
+            </form>
+    </div>
+</div>
+</div>
+</div>

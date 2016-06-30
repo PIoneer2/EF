@@ -28,13 +28,12 @@ namespace EF.WebApi.Controllers
         }
 
         // GET: api/TypeOfStorage
-        [ActionName("DefaultAction")]
-        public async Task<IQueryable<TypeOfStorage>> Get()//my
+        public IQueryable<TypeOfStorage> Get()//my
         {
             try
             {
-                var currentUser = await manager.FindByIdAsync(User.Identity.GetUserId<long>());
-                return logic.Index(typeOfStorageRepository, currentUser.Id).AsQueryable();
+                //var currentUser = await manager.FindByIdAsync(User.Identity.GetUserId<long>());
+                return logic.Index(typeOfStorageRepository, 0).AsQueryable();
             }
             catch
             {
@@ -45,6 +44,7 @@ namespace EF.WebApi.Controllers
         // GET: api/TypeOfStorage/All
         [System.Web.Http.Authorize(Roles = "Admin")]
         [System.Web.Http.HttpGet]
+        [Route("take/All")]
         public IQueryable<TypeOfStorage> All()    //all
         {
             try
@@ -92,11 +92,11 @@ namespace EF.WebApi.Controllers
         // PUT: api/TypeOfStorage/5
         [System.Web.Http.HttpPut]
         [Authorize(Roles = "Admin,Manager")]
-        public async Task<IHttpActionResult> Put([FromBody]TypeOfStorageDTO typeOfStorage)
+        public IHttpActionResult Put([FromBody]TypeOfStorageDTO typeOfStorage)
         {
             try
             {
-                var currentUser = await manager.FindByIdAsync(User.Identity.GetUserId<long>());
+                //var currentUser = await manager.FindByIdAsync(User.Identity.GetUserId<long>());
                 TypeOfStorage typicalTypeOfStorage = EFServiceLocator.GetService<TypeOfStorage>();
                 logic.FromDTOtoBaseClass(typeOfStorage, typicalTypeOfStorage, true);
                 logic.EditInPost(typicalTypeOfStorage, typeOfStorageRepository);

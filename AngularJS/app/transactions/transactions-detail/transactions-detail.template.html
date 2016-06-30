@@ -1,0 +1,74 @@
+<div class="container-fluid">
+  <!--Body content-->
+  <h2>Transaction details</h2>
+  <div class="book-example panel panel-primary">
+    <div class="panel-heading panel-head">Transaction details</div>
+    <div class="panel-body">
+        <div class="form-horizontal">
+            <div class="form-group">
+                <label class = "col-lg-2 control-label">Description</label>
+                <div class="col-lg-9">
+                    <label class = "form-control">{{$ctrl.transaction.Description}}</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class = "col-lg-2 control-label">User</label>
+                <div class="col-lg-9">
+                    <label class = "form-control">{{$ctrl.transaction.Users.UserName}}</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class = "col-lg-2 control-label">Transaction Type</label>
+                <div class="col-lg-9">
+                    <label class = "form-control">{{$ctrl.transaction.TranactionType.Name}}</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class = "col-lg-2 control-label">Date</label>
+                <div class="col-lg-9">
+                    <label class = "form-control">{{$ctrl.transaction.Date | date : 'yyyy.MM.dd hh:mm:ss' }}</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <table class="table">
+                    <caption>List of Goods In Transaction</caption>
+                    <tr>
+                        <th>
+                            Name
+                        </th>
+                        <th>
+                            Quantity
+                        </th>
+                    </tr>
+
+                    <tr ng-repeat="good in $ctrl.transaction.GoodsInTransaction" class="goods">
+                        <td>
+                            {{good.Goods.Name}}
+                        </td>
+                        <td>
+                            {{good.Quantity}}
+                        </td>
+                    </tr>
+                </table>
+                <span class="error-message" ng-show="$ctrl.showServerMessage"> {{$ctrl.serverMessage}}
+                    <ul>
+                        <li class="has-error" ng-repeat="error in $ctrl.modelErrors"> {{error}} </li> 
+                    </ul>
+                    <img src="/resourses/loader.gif">
+                </span>
+            </div>
+
+            <div class="form-group">
+                <div class="col-lg-1"></div>
+                <div class="col-lg-9" ng-disabled="$ctrl.showServerMessage">
+                    <a class = "btn btn-primary" title="Edit" href="#!/transactions/createedit/{{$ctrl.transaction.Id}}">Edit</a> |
+                    <a class = "btn btn-success" title="Back to List" href="#!/transactions">Index</a>
+                </div>
+            </div>
+    </div>
+</div>
+</div>

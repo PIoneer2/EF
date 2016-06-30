@@ -11,7 +11,7 @@ using Microsoft.AspNet.Identity;
 
 namespace EF.WebApi.Controllers
 {
-    [System.Web.Http.Authorize(Roles = "Admin")]
+    [System.Web.Http.Authorize]
     public class UserController : ApiController
     {
         private IUnitOfWork unitOfWork;
@@ -28,13 +28,12 @@ namespace EF.WebApi.Controllers
         }
 
         // GET: api/User
-        [ActionName("DefaultAction")]
-        public async Task<IQueryable<User>> Get()//my
+        [System.Web.Http.HttpGet]
+        public IQueryable<User> Get()
         {
             try
             {
-                var currentUser = await manager.FindByIdAsync(User.Identity.GetUserId<long>());
-                return logic.Index(userRepository, currentUser.Id).AsQueryable();
+                return logic.Index(userRepository, 0).AsQueryable();
             }
             catch
             {
@@ -43,6 +42,8 @@ namespace EF.WebApi.Controllers
         }
 
         // GET: api/User/5
+        [System.Web.Http.HttpGet]
+        [System.Web.Http.Authorize(Roles = "Admin")]
         public JsonResult<User> Get(long id)
         {
             try
@@ -57,6 +58,7 @@ namespace EF.WebApi.Controllers
 
         // POST: api/User
         [System.Web.Http.HttpPost]
+        [System.Web.Http.Authorize(Roles = "Admin")]
         public async Task<IHttpActionResult> Post([FromBody]UserDTO user)
         {
             try
@@ -75,11 +77,12 @@ namespace EF.WebApi.Controllers
 
         // PUT: api/User/5
         [System.Web.Http.HttpPut]
-        public async Task<IHttpActionResult> Put([FromBody]UserDTO user)
+        [System.Web.Http.Authorize(Roles = "Admin")]
+        public IHttpActionResult Put([FromBody]UserDTO user)
         {
             try
             {
-                var currentUser = await manager.FindByIdAsync(User.Identity.GetUserId<long>());
+                //var currentUser = await manager.FindByIdAsync(User.Identity.GetUserId<long>());
                 User typicalUser = EFServiceLocator.GetService<User>();
                 logic.FromDTOtoBaseClass(user, typicalUser, true);
                 logic.EditInPost(typicalUser, userRepository);
@@ -93,6 +96,7 @@ namespace EF.WebApi.Controllers
 
         // DELETE: api/User/5
         [System.Web.Http.HttpDelete]
+        [System.Web.Http.Authorize(Roles = "Admin")]
         public IHttpActionResult Delete(long id)
         {
             try

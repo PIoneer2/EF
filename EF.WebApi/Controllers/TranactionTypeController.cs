@@ -28,13 +28,13 @@ namespace EF.WebApi.Controllers
         }
 
         // GET: api/TranactionType
-        [ActionName("DefaultAction")]
-        public async Task<IQueryable<TranactionType>> Get()//my
+        //[ActionName("DefaultAction")]
+        [System.Web.Http.HttpGet]
+        public IQueryable<TranactionType> Get()
         {
             try
             {
-                var currentUser = await manager.FindByIdAsync(User.Identity.GetUserId<long>());
-                return logic.Index(tranactionTypeRepository, currentUser.Id).AsQueryable();
+                return logic.Index(tranactionTypeRepository, 0).AsQueryable();
             }
             catch
             {
@@ -43,8 +43,9 @@ namespace EF.WebApi.Controllers
         }
 
         // GET: api/TranactionType/All
-        [System.Web.Http.Authorize(Roles = "Admin")]
+        
         [System.Web.Http.HttpGet]
+        [Route("take/All")]
         public IQueryable<TranactionType> All()    //all
         {
             try
@@ -56,8 +57,9 @@ namespace EF.WebApi.Controllers
                 throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.BadRequest));
             }
         }
-
+        
         // GET: api/TranactionType/5
+        [System.Web.Http.HttpGet]
         public JsonResult<TranactionType> Get(long id)
         {
             try
@@ -92,11 +94,11 @@ namespace EF.WebApi.Controllers
         // PUT: api/TranactionType/5
         [System.Web.Http.HttpPut]
         [Authorize(Roles = "Admin,Manager")]
-        public async Task<IHttpActionResult> Put([FromBody]TranactionTypeDTO tranactionType)
+        public IHttpActionResult Put([FromBody]TranactionTypeDTO tranactionType)
         {
             try
             {
-                var currentUser = await manager.FindByIdAsync(User.Identity.GetUserId<long>());
+                //var currentUser = await manager.FindByIdAsync(User.Identity.GetUserId<long>());
                 TranactionType typicalTranactionType = EFServiceLocator.GetService<TranactionType>();
                 logic.FromDTOtoBaseClass(tranactionType, typicalTranactionType, true);
                 logic.EditInPost(typicalTranactionType, tranactionTypeRepository);

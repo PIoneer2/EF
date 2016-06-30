@@ -1,0 +1,83 @@
+﻿    <h2>Create a new account</h2>
+    <hr />
+    <div class="row">
+        <div class="col-md-8">
+            <form name="registerForm" novalidate ng-submit="$ctrl.submit()"> 
+                <div class="form-group">
+                    <label class = "col-md-2 control-label">E-mail</label>
+                    <div class="col-md-10">
+                        <input class = "form-control" type="email" required ng-model="$ctrl.email" 
+                        placeholder="somemail@example.com" name="registerEmail" 
+                        ng-maxlength="$ctrl.maxLenghtEmail">
+                        <span class="error-message" ng-show="registerForm.registerEmail.$dirty">
+                            <span class="error-message" ng-show="registerForm.registerEmail.$error.email">
+                                Wrong email format. Example: somemail3@example.com.
+                            </span>
+                            <span class="error-message" ng-show="registerForm.registerEmail.$error.required">
+                                Email is not set. Please, enter the value.
+                            </span>
+                            <span class="error-message" ng-show="registerForm.registerEmail.$error.maxlength">
+                                Email is to long. The limit is {{$ctrl.maxLenghtEmail}}.
+                            </span>
+                        </span>       
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class = "col-md-2 control-label">Password</label>
+                    <div class="col-md-10">
+                        <input class = "form-control" type="password" required ng-model="$ctrl.password" 
+                        name="password" placeholder="******"
+                        ng-minlength="$ctrl.minLenghtPassword" 
+                        ng-maxlength="$ctrl.maxLenghtPassword">
+                        <span class="error-message" ng-show="registerForm.password.$dirty">
+                            <span class="error-message" ng-show="registerForm.password.$error.required">
+                                1-st password is not set. Please, enter the value.
+                            </span>
+                            <span class="error-message" ng-show="registerForm.password.$error.maxlength || registerForm.password.$error.minlength">
+                                Wrong length of 1-st password. Min is - {{$ctrl.minLenghtPassword}}, max - {{$ctrl.maxLenghtPassword}} symbols.
+                            </span></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class = "col-md-2 control-label">Confirm password</label>
+                        <div class="col-md-10">
+                            <input class = "form-control" type="password" required ng-model="$ctrl.password2" 
+                            name="password2" placeholder="******"
+                            ng-minlength="$ctrl.minLenghtPassword" 
+                            ng-maxlength="$ctrl.maxLenghtPassword"
+                            ng-class="{'has-error': !($ctrl.password === $ctrl.password2)}"
+                            >
+                            <span class="error-message" ng-show="registerForm.password2.$dirty">
+                                <span class="error-message" ng-show="!($ctrl.password == $ctrl.password2)">
+                                    Passwords do not match!
+                                </span>
+                                <span class="error-message" ng-show="registerForm.password2.$error.required">
+                                   2-nd password is not set. Please, enter the value.
+                               </span>
+                               <span class="error-message" ng-show="registerForm.password2.$error.maxlength || registerForm.password2.$error.minlength">
+                                Wrong length of 2-nd password. Min is - {{$ctrl.minLenghtPassword}}, max - {{$ctrl.maxLenghtPassword}} symbols.
+                            </span>
+                        </span>
+                        <span ng-show="$ctrl.showServerMessage">
+                            <hr />
+                            {{$ctrl.regMessage}}
+                            <ul>
+                            <li class="has-error" ng-repeat="error in $ctrl.modelErrors"> {{error}} </li> 
+                            </ul>
+                            <hr />
+                            <img src="/resourses/loader.gif">
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" class="btn btn-default" value="Register" ng-disabled="registerForm.$invalid || 
+                        !($ctrl.password === $ctrl.password2) || $ctrl.showServerMessage"/>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <p>
+        <a title="Login as a existing user" href="#!/Account/Login">Already registered. Go to login.</a>
+    </p>

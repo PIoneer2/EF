@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -12,10 +13,15 @@ namespace EF.Core.Data
     {
         public long Id { get; set; }
         public int Quantity { get; set; }
+
         public long TransactionsId { get; set; }
+
         public long GoodsId { get; set; }
 
+        [JsonProperty(ReferenceLoopHandling = ReferenceLoopHandling.Ignore, IsReference = true)]
         public virtual Transactions Transactions { get; set; }
+
+        [JsonProperty(ReferenceLoopHandling = ReferenceLoopHandling.Ignore, IsReference = true)]
         public virtual Goods Goods { get; set; }
     }
 

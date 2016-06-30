@@ -1,0 +1,58 @@
+[
+    {
+        "TranactionType": {
+            "Id": 1,
+            "Name": "Supply"
+        },
+        "Users": {
+            "Email": "2@2.com",
+            "UserName": "2@2.com",
+            "Id": 2
+        },
+        "GoodsInTransaction": [
+            {
+                "Goods": {
+                    "Sizes": {
+                        "Id": 1,
+                        "Size": "40*60*20"
+                    },
+                    "TypeOfStorage": {
+                        "Id": 1,
+                        "Type": "Palette"
+                    },
+                    "Id": 2,
+                    "Name": "Pepper",
+                    "Quantity": 5,
+                    "TypeOfStorageId": 1,
+                    "SizesId": 1,
+                    "Info": "1 good info"
+                },
+                "Transactions": {
+                    "TranactionType": {
+                        "Id": 2,
+                        "Name": "Order"
+                    },
+                    "Users": {
+                        "Email": "1@2.com",
+                        "UserName": "1@2.com",
+                        "Id": 1
+                    },
+                    "Description": "1st transaction",
+                    "TranactionTypeId": 2,
+                    "UserId": 1,
+                    "Date": "2016-05-30T00:00:00",
+                    "Id": 1
+                },
+                "Id": 2,
+                "Quantity": 3,
+                "TransactionsId": 2,
+                "GoodsId": 2
+            }
+        ],
+        "Id": 10017,
+        "Description": "66",
+        "TranactionTypeId": 2,
+        "UserId": 1,
+        "Date": "2016.06.03T07:01:44"
+    }
+]

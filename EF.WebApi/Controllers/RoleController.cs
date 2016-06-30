@@ -28,13 +28,12 @@ namespace EF.WebApi.Controllers
         }
 
         // GET: api/Role
-        [ActionName("DefaultAction")]
-        public async Task<IQueryable<Role>> Get()//my
+        public IQueryable<Role> Get()//my
         {
             try
             {
-                var currentUser = await manager.FindByIdAsync(User.Identity.GetUserId<long>());
-                return logic.Index(roleRepository, currentUser.Id).AsQueryable();
+                //var currentUser = await manager.FindByIdAsync(User.Identity.GetUserId<long>());
+                return logic.Index(roleRepository, 0).AsQueryable();
             }
             catch
             {
@@ -44,6 +43,7 @@ namespace EF.WebApi.Controllers
 
         // GET: api/Role/All
         [System.Web.Http.HttpGet]
+        [Route("take/All")]
         public IQueryable<Role> All()    //all
         {
             try
@@ -89,11 +89,11 @@ namespace EF.WebApi.Controllers
 
         // PUT: api/Role/5
         [System.Web.Http.HttpPut]
-        public async Task<IHttpActionResult> Put([FromBody]RoleDTO role)
+        public IHttpActionResult Put([FromBody]RoleDTO role)
         {
             try
             {
-                var currentUser = await manager.FindByIdAsync(User.Identity.GetUserId<long>());
+                //var currentUser = await manager.FindByIdAsync(User.Identity.GetUserId<long>());
                 Role typicalRoles = EFServiceLocator.GetService<Role>();
                 logic.FromDTOtoBaseClass(role, typicalRoles, true);
                 logic.EditInPost(typicalRoles, roleRepository);

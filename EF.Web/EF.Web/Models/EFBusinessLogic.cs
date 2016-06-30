@@ -3,6 +3,7 @@ using System.Linq;
 using EF.Core.Data;
 using EF.Core;
 using System;
+using EF.Web.SLocator;
 
 namespace EF.Web.BusinessLogic
 {
@@ -374,7 +375,20 @@ namespace EF.Web.BusinessLogic
             tmpRepository.Delete(model);
         }
 
-        void IBusinessLogic.FromDTOtoBaseClass(BaseEntity fromObject, IBaseEntity toObject, bool copyId)
+        TransactionDTO IBusinessLogic.FromBaseToDTOTransaction(Transactions fromObject)
+        { 
+                TransactionDTO toObjectTmp = EFServiceLocator.GetService<TransactionDTO>();
+
+                toObjectTmp.Date = fromObject.Date;
+                toObjectTmp.Description = fromObject.Description;
+                toObjectTmp.TranactionTypeId = fromObject.TranactionTypeId;
+                toObjectTmp.UserId = fromObject.UserId;
+                toObjectTmp.Id = fromObject.Id;
+
+                return toObjectTmp;
+        }
+
+            void IBusinessLogic.FromDTOtoBaseClass(BaseEntity fromObject, IBaseEntity toObject, bool copyId)
         {
             if ((toObject.GetType() == typeof(Transactions)) && (fromObject.GetType() == typeof(TransactionDTO)))
             {

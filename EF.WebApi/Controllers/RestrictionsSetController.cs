@@ -28,13 +28,12 @@ namespace EF.WebApi.Controllers
         }
 
         // GET: api/RestrictionsSet
-        [ActionName("DefaultAction")]
-        public async Task<IQueryable<RestrictionsSet>> Get()//my
+        public IQueryable<RestrictionsSet> Get()//my
         {
             try
             {
-                var currentUser = await manager.FindByIdAsync(User.Identity.GetUserId<long>());
-                return logic.Index(restrictionsSetRepository, currentUser.Id).AsQueryable();
+                //var currentUser = await manager.FindByIdAsync(User.Identity.GetUserId<long>());
+                return logic.Index(restrictionsSetRepository, 0).AsQueryable();
             }
             catch
             {
@@ -45,6 +44,7 @@ namespace EF.WebApi.Controllers
         // GET: api/RestrictionsSet/All
         [System.Web.Http.Authorize(Roles = "Admin")]
         [System.Web.Http.HttpGet]
+        [Route("take/All")]
         public IQueryable<RestrictionsSet> All()    //all
         {
             try
@@ -92,11 +92,11 @@ namespace EF.WebApi.Controllers
         // PUT: api/RestrictionsSet/5
         [System.Web.Http.HttpPut]
         [Authorize(Roles = "Admin,Manager")]
-        public async Task<IHttpActionResult> Put([FromBody]RestrictionsSetDTO restrictionsSet)
+        public IHttpActionResult Put([FromBody]RestrictionsSetDTO restrictionsSet)
         {
             try
             {
-                var currentUser = await manager.FindByIdAsync(User.Identity.GetUserId<long>());
+                //var currentUser = await manager.FindByIdAsync(User.Identity.GetUserId<long>());
                 RestrictionsSet typicalRestrictionsSets = EFServiceLocator.GetService<RestrictionsSet>();
                 logic.FromDTOtoBaseClass(restrictionsSet, typicalRestrictionsSets, true);
                 logic.EditInPost(typicalRestrictionsSets, restrictionsSetRepository);

@@ -8,6 +8,7 @@ using Newtonsoft.Json.Serialization;
 using System.Web.OData.Batch;
 using System.Web.OData.Builder;
 using System.Web.OData.Extensions;
+using System.Web.Http.Cors;
 
 namespace EF.WebApi
 {
@@ -25,18 +26,32 @@ namespace EF.WebApi
 
             config.Routes.MapHttpRoute(
                 name: "ActionApi",
-                routeTemplate: "api/{controller}/{action}"
+                routeTemplate: "api/{controller}/take/{action}" //"api/{controller}/{action}"
             );
 
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
                 routeTemplate: "api/{controller}/{id}",
-                defaults: new { action = "DefaultAction", id = RouteParameter.Optional }
+                defaults: new { id = RouteParameter.Optional } //action = "DefaultAction", 
             );
-            
+
             //global OData enabling
             //config.EnableQuerySupport();
             System.Web.OData.Extensions.HttpConfigurationExtensions.AddODataQueryFilter(config);
+
+            //excluding circular links in JSON (if present)
+            //1
+            /*
+            config.Formatters.JsonFormatter.SerializerSettings.ReferenceLoopHandling = 
+                Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+                */
+            //2
+            /*
+            config.Formatters.JsonFormatter.SerializerSettings.ReferenceLoopHandling = 
+            Newtonsoft.Json.ReferenceLoopHandling.Serialize;
+            config.Formatters.JsonFormatter.SerializerSettings.PreserveReferencesHandling = 
+            Newtonsoft.Json.PreserveReferencesHandling.Objects;
+            */
         }
     }
 }

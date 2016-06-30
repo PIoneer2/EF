@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 using EF.WebApi.Models;
+using Newtonsoft.Json;
 
 namespace EF.WebApi
 {
@@ -19,9 +20,15 @@ namespace EF.WebApi
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
-
-            //validation of JSON will be in each Ctrlr
-            //GlobalConfiguration.Configuration.Filters.Add(new ValidationActionFilter());
+            
+            /*
+            //The fix is to ignore loop references and not to serialize them
+            JsonConvert.DefaultSettings = () => new JsonSerializerSettings
+            {
+                Formatting = Newtonsoft.Json.Formatting.Indented,
+                ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+            };
+            */
         }
     }
 }

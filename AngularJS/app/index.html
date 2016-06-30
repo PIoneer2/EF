@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en" ng-app="transactionsMainApp">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My AngularJS, ASP.NET Application</title>
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="app.css" />
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/angular-route/angular-route.js"></script>
+    <script src="app.module.js"></script>
+    <script src="app.config.js"></script>
+    <script src="account/account.service.js"></script>
+    <script src="account/account-login/account-login.module.js"></script>
+    <script src="account/account-login/account-login.component.js"></script>
+    <script src="account/account-register/account-register.module.js"></script>
+    <script src="account/account-register/account-register.component.js"></script>
+    <script src="home-index/home-index.module.js"></script>
+    <script src="home-index/home-index.component.js"></script>
+    <script src="transactions/transactions.service.js"></script>
+    <script src="transactions/transactions-list/transactions-list.module.js"></script>
+    <script src="transactions/transactions-list/transactions-list.component.js"></script>
+    <script src="transactions/transactions-detail/transactions-detail.module.js"></script>
+    <script src="transactions/transactions-detail/transactions-detail.component.js"></script>
+    <script src="transactions/transactions-delete/transactions-delete.module.js"></script>
+    <script src="transactions/transactions-delete/transactions-delete.component.js"></script>
+    <script src="transactions/transactions-createedit/transactions-createedit.module.js"></script>
+    <script src="transactions/transactions-createedit/transactions-createedit.component.js"></script>
+</head>
+<body ng-controller="TransactionsMainAppController as mainCtrl">
+<!--
+			navbar-fixed-top
+            -->
+    <div class="navbar navbar-inverse ">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                
+            </div>
+            <div class="navbar-collapse collapse ">
+                <ul class="nav navbar-nav">
+                    <li><a title="Inventory management" href="#!/home">Inventory management</a></li>
+                    <li><a title="Transactions" href="#!/transactions">Transactions</a></li>
+                </ul>
+                
+                <div ng-switch on="logged">
+                    <ul class="nav navbar-nav navbar-right" ng-switch-when="true">
+                        <li><a href="#">Hello, {{email}}</a></li>
+                        <li><a ng-click="mainCtrl.logoff()" href="#">Log off</a></li>
+                    </ul>
+
+                    <ul class="nav navbar-nav navbar-right" ng-switch-when="false">
+                        <li><a title="Register" href="#!/Account/Register">Register</a></li>
+                        <li><a title="Log in" href="#!/Account/Login">Login</a></li>
+                    </ul>
+                    
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        <div ng-view></div>
+    </div>
+    <hr />
+    <footer>
+    <div class="container body-content">
+        <p>2016&nbsp;&copy; Inventory management</p>
+    </div>
+    </footer>
+</body>
+</html>

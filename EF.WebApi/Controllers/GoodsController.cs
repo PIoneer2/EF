@@ -28,13 +28,12 @@ namespace EF.WebApi.Controllers
         }
 
         // GET: api/Goods
-        [ActionName("DefaultAction")]
-        public async Task<IQueryable<Goods>> Get()//my
+        [System.Web.Http.HttpGet]
+        public IQueryable<Goods> Get()
         {
             try
             {
-                var currentUser = await manager.FindByIdAsync(User.Identity.GetUserId<long>());
-                return logic.Index(goodsRepository, currentUser.Id).AsQueryable();
+                return logic.Index(goodsRepository, 0).AsQueryable();
             }
             catch
             {
@@ -44,8 +43,9 @@ namespace EF.WebApi.Controllers
 
         // GET: api/Goods/All
         [System.Web.Http.HttpGet]
+        [Route("take/All")]
         [System.Web.Http.Authorize(Roles = "Admin")]
-        public IQueryable<Goods> All()    //all
+        public IQueryable<Goods> All()
         {
             try
             {
@@ -58,6 +58,7 @@ namespace EF.WebApi.Controllers
         }
 
         // GET: api/Goods/5
+        [System.Web.Http.HttpGet]
         public JsonResult<Goods> Get(long id)
         {
             try
@@ -93,11 +94,11 @@ namespace EF.WebApi.Controllers
         // PUT: api/Goods/5
         [System.Web.Http.HttpPut]
         [Authorize(Roles = "Admin,Manager")]
-        public async Task<IHttpActionResult> Put([FromBody]GoodDTO good)
+        public IHttpActionResult Put([FromBody]GoodDTO good)
         {
             try
             {
-                var currentUser = await manager.FindByIdAsync(User.Identity.GetUserId<long>());
+                //var currentUser = await manager.FindByIdAsync(User.Identity.GetUserId<long>());
                 Goods typicalGood = EFServiceLocator.GetService<Goods>();
                 logic.FromDTOtoBaseClass(good, typicalGood, true);
                 logic.EditInPost(typicalGood, goodsRepository);

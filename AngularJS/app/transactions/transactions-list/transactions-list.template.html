@@ -1,0 +1,59 @@
+<div class="container-fluid">
+      <!--Body content-->
+<h2>Transactions list</h2>
+<div class="book-example panel panel-primary">
+    <div class="panel-heading panel-head">Transactions list</div>
+    <div class="panel-body">
+        <a id="createEditTransaction"
+        ng-disabled="$ctrl.showServerMessage" 
+           href="#!/transactions/createedit/0")" class="btn btn-success">
+            <span class="glyphicon glyphicon-plus"></span>&nbsp; Add transaction
+        </a>
+<table class="table">
+            <tr>
+                <th>
+                    Description
+                </th>
+                <th>
+                    User Id
+                </th>
+                <th>
+                    Transaction Type Id
+                </th>
+                <th>
+                    Date
+                </th>
+                <th>
+                    Action
+                </th>
+                <th></th>
+            </tr>
+            <tr ng-repeat="transaction in $ctrl.transactions track by transaction.Id" class="transactions">
+                    <td>
+                        {{transaction.Description}}
+                    </td>
+                    <td>
+                        {{transaction.UserId}}
+                    </td>
+                    <td>
+                        {{transaction.TranactionTypeId}}
+                    </td>
+                    <td>
+                        {{transaction.Date | date : 'yyyy.MM.dd hh:mm:ss'}}
+                    </td>
+                    <td>
+                    <a class = "btn btn-success" title="Edit" href="#!/transactions/createedit/{{transaction.Id}}">Edit</a> |
+                    <a class = "btn btn-primary" title="Detail" href="#!/transactions/detail/{{transaction.Id}}">Detail</a> |
+                    <a class = "btn btn-danger"  title="Delete" href="#!/transactions/delete/{{transaction.Id}}">Delete</a>
+                    </td>
+            </tr>
+</table>
+<span class="error-message" ng-show="$ctrl.showServerMessage"> {{$ctrl.serverMessage}}
+    <ul>
+        <li class="has-error" ng-repeat="error in $ctrl.modelErrors"> {{error}} </li> 
+    </ul>
+    <img src="/resourses/loader.gif">
+</span>
+</div>
+</div>
+</div>
