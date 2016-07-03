@@ -5,8 +5,37 @@ angular
 .service('accountHttpService', accountHttpService);
 
 accountHttpService.$inject = ['$http', '$httpParamSerializerJQLike', '$location', '$timeout', '$rootScope'];
-function accountHttpService ($http, $httpParamSerializerJQLike, $location, $timeout, $rootScope){ //typeOfService, data, redirectPath, 
-this.makePOST = function(typeOfService, data, redirectPath, $scope) { //, $http, $httpParamSerializerJQLike, $location, $timeout
+function accountHttpService ($http, $httpParamSerializerJQLike, $location, $timeout, $rootScope){
+
+this.makeLogoff = function($scope) {
+      return $http({method: 'POST', url: 'http://localhost/efapi/api/Account/Logout', 
+        headers: { "Authorization": "Bearer " + sessionStorage.token }})
+      .then(
+        function(response) {
+            sessionStorage.removeItem('userName');
+            sessionStorage.removeItem('token');
+            sessionStorage.removeItem('Id');
+            $rootScope.email = '';
+            $rootScope.token = '';
+            $rootScope.logged = false;
+            $rootScope.Id = '';
+            $location.path('/home');
+        },
+        function (response) {
+            $scope.$ctrl.showServerMessage = true;
+            $scope.$ctrl.serverMessage = 'There were some errors with login:';
+            $scope.$ctrl.modelErrors = new Array();
+            for (var key in response.data) {
+              $scope.$ctrl.modelErrors.push(response.data[key]);
+            }
+          $timeout(function() {
+              $scope.$ctrl.showServerMessage = false;
+          }, 5000);
+      }
+      );
+  }
+
+this.makePOST = function(typeOfService, data, redirectPath, $scope) { 
 $scope.$ctrl.showServerMessage = true;
 var 
 URLReg = 'http://localhost/efapi/api/Account/Register',
@@ -46,23 +75,35 @@ return $http({method: 'POST', url: URL, data: sendData, headers: header})
   },
   function (response) {
     try {
-        $scope.$ctrl.serverMessage = response.data.Message;
+      if (response.data.Message !== undefined){
         $scope.$ctrl.modelErrors = new Array();
+        $scope.$ctrl.serverMessage = response.data.Message;
         for (var key in response.data.ModelState) {
-            for (var i = 0; i < response.data.ModelState[key].length; i++) {
-                $scope.$ctrl.modelErrors.push(response.data.ModelState[key][i]);
-            }
+          for (var i = 0; i < response.data.ModelState[key].length; i++) {
+            $scope.$ctrl.modelErrors.push(response.data.ModelState[key][i]);
+          }
         }
+      }
+      else {
+        $scope.$ctrl.serverMessage = response.statusText;
+        $scope.$ctrl.modelErrors = new Array();
+        for (var key in response.data) {
+          $scope.$ctrl.modelErrors.push(response.data[key]);
+        }
+        $timeout(function() {
+          $scope.$ctrl.showServerMessage = false;
+        }, 2000);
+      }
     }
     catch (error) {
-        $scope.$ctrl.serverMessage = error.data;
+      $scope.$ctrl.serverMessage = error.data
     }
     finally {
-        $timeout(function() {
-            $scope.$ctrl.showServerMessage = false;
-        }, 5000);
+      $timeout(function() {
+        $scope.$ctrl.showServerMessage = false;
+      }, 5000);
     }
-});
+  });
     }
     return this;
 };

@@ -218,12 +218,52 @@ namespace EF.Web.BusinessLogic
             {
                 GoodsInTransaction model = mdl as GoodsInTransaction;
                 IRepository<GoodsInTransaction> tmpRepository = (IRepository<GoodsInTransaction>)parametricRepository;
+
                 var editModel = tmpRepository.GetById(model.Id);
 
-                editModel.Quantity = model.Quantity; ;
+                if (editModel.Transactions != null)
+                {
+                    if (editModel.Transactions.TranactionTypeId == 1)
+                    {
+                        editModel.Goods.Quantity -= editModel.Quantity;
+                        editModel.Goods.Quantity += model.Quantity;
+                    }
+                    if (editModel.Transactions.TranactionTypeId == 2)
+                    {
+                        editModel.Goods.Quantity += editModel.Quantity;
+                        editModel.Goods.Quantity -= model.Quantity;
+                    }
+                    if (editModel.Goods.Quantity <0)
+                    {
+                        throw new Exception("Code tried make Goods.Quantity <0");
+                    }
+                }
+                else
+                {
+                    IUnitOfWork unitOfWork = EFServiceLocator.GetService<IUnitOfWork>();
+                    IRepository<Goods> goodsRepository = goodsRepository = unitOfWork.Repository<Goods>();
+                    IRepository<Transactions> transactionsRepository = unitOfWork.Repository<Transactions>();
+                    var goodsModel = goodsRepository.GetById(model.TransactionsId);
+                    var transactionsModel = transactionsRepository.GetById(model.GoodsId);
+
+                    if (transactionsModel.TranactionTypeId == 1)
+                    {
+                        goodsModel.Quantity += model.Quantity;
+                    }
+                    if (transactionsModel.TranactionTypeId == 2)
+                    {
+                        goodsModel.Quantity -= model.Quantity;
+                    }
+                    if (goodsModel.Quantity < 0)
+                    {
+                        throw new Exception("Code tried make Goods.Quantity <0");
+                    }
+                    goodsRepository.Update(goodsModel);
+                }
+
+                editModel.Quantity = model.Quantity;
                 editModel.TransactionsId = model.TransactionsId;
                 editModel.GoodsId = model.GoodsId;
-
                 tmpRepository.Update(editModel);
                 return model as T;
             }
@@ -370,9 +410,26 @@ namespace EF.Web.BusinessLogic
 
         void IBusinessLogic.ConfirmDelete<T>(IRepository<T> parametricRepository, long id)
         {
-            IRepository<T> tmpRepository = parametricRepository;
-            T model = tmpRepository.GetById(id);
-            tmpRepository.Delete(model);
+            if (typeof(T) == typeof(GoodsInTransaction))
+            {
+                IRepository<GoodsInTransaction> tmpRepository = (IRepository<GoodsInTransaction>)parametricRepository;
+                GoodsInTransaction model = tmpRepository.GetById(id);
+                if (model.Transactions.TranactionTypeId == 1)
+                {
+                    model.Goods.Quantity -= model.Quantity;
+                }
+                if (model.Transactions.TranactionTypeId == 2)
+                {
+                    model.Goods.Quantity += model.Quantity;
+                }
+                tmpRepository.Delete(model);
+            }
+            else
+            {
+                IRepository<T> tmpRepository = parametricRepository;
+                T model = tmpRepository.GetById(id);
+                tmpRepository.Delete(model);
+            }
         }
 
         TransactionDTO IBusinessLogic.FromBaseToDTOTransaction(Transactions fromObject)

@@ -32,7 +32,6 @@ namespace EF.WebApi.Controllers
         {
             try
             {
-                //var currentUser = await manager.FindByIdAsync(User.Identity.GetUserId<long>());
                 return logic.Index(goodsInTransactionRepository, 0).AsQueryable();
             }
             catch
@@ -77,8 +76,8 @@ namespace EF.WebApi.Controllers
         {
             try
             {
-                var currentUser = await manager.FindByIdAsync(User.Identity.GetUserId<long>());
-                GoodsInTransaction blankGoodsInTransaction = logic.CreateBlankModel(goodsInTransactionRepository, currentUser.Id);
+                //var currentUser = await manager.FindByIdAsync(User.Identity.GetUserId<long>());
+                GoodsInTransaction blankGoodsInTransaction = logic.CreateBlankModel(goodsInTransactionRepository, 0);
                 logic.FromDTOtoBaseClass(goodsInTransaction, blankGoodsInTransaction, false);
                 logic.EditInPost(blankGoodsInTransaction, goodsInTransactionRepository);
                 return Ok();
@@ -96,7 +95,6 @@ namespace EF.WebApi.Controllers
         {
             try
             {
-                //var currentUser = await manager.FindByIdAsync(User.Identity.GetUserId<long>());
                 GoodsInTransaction typicalGoodsInTransactions = EFServiceLocator.GetService<GoodsInTransaction>();
                 logic.FromDTOtoBaseClass(goodsInTransaction, typicalGoodsInTransactions, true);
                 logic.EditInPost(typicalGoodsInTransactions, goodsInTransactionRepository);
